@@ -27,19 +27,6 @@ export default function App() {
   const [compareList, setCompareList] = useState([]);
   const [showCompareResults, setShowCompareResults] = useState(false);
 
-  const copyToClipboard = (spell) => {
-    const cleanText = spell.description.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
-    navigator.clipboard.writeText(`${spell.name}\n${cleanText}`).then(() => alert("Скопировано!"));
-  };
-
-  const getTheme = (description) => {
-    if (description?.includes("Атакующие")) return { modalBorder: "border-red-500", header: "bg-red-600" };
-    if (description?.includes("Защитные")) return { modalBorder: "border-blue-500", header: "bg-blue-600" };
-    if (description?.includes("Регенерирующие")) return { modalBorder: "border-emerald-500", header: "bg-emerald-600" };
-    if (description?.includes("Помехи")) return { modalBorder: "border-purple-500", header: "bg-purple-600" };
-    return { modalBorder: "border-amber-500", header: "bg-amber-600" };
-  };
-
   const filteredData = useMemo(() => {
     const result = {};
     Object.entries(spellsData).forEach(([letter, spells]) => {
@@ -58,6 +45,21 @@ export default function App() {
     setFavorites(prev => prev.find(f => f.name === spell.name) ? prev.filter(f => f.name !== spell.name) : [...prev, spell]);
   };
 
+  // Хэндлер для кнопки Сравнить/Отмена
+  const handleCompareClick = () => {
+    if (compareMode) {
+      if (compareList.length >= 2) {
+        setShowCompareResults(true);
+      } else {
+        // Если ничего не выбрали или только одно — просто выходим из режима
+        setCompareMode(false);
+        setCompareList([]);
+      }
+    } else {
+      setCompareMode(true);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-amber-50 font-serif overflow-x-hidden">
       <header className="p-10 pb-6 max-w-[1600px] mx-auto">
@@ -65,10 +67,9 @@ export default function App() {
         <p className="text-amber-700 text-sm mt-2 uppercase tracking-widest font-sans">v.6.0 | Фикс геометрии</p>
       </header>
 
-      {/* ГЛАВНЫЙ КОНТЕЙНЕР С ОГРАНИЧЕНИЕМ ШИРИНЫ */}
       <div className="flex gap-6 px-4 md:px-10 pb-10 max-w-[1600px] mx-auto relative">
         
-        {/* ЛЕВАЯ ПАНЕЛЬ (ШИРОКАЯ) */}
+        {/* ЛЕВАЯ ПАНЕЛЬ */}
         <div className="w-24 md:w-36 flex-shrink-0 flex flex-col items-center sticky top-6 h-[calc(100vh-48px)] z-[100]">
           <div className="w-full bg-amber-600 pt-5 pb-3 rounded-t-2xl border-b-2 border-black/20 flex flex-col items-center shadow-lg">
             <span className="text-[10px] md:text-xs font-black text-black uppercase text-center px-1">ПАНЕЛЬ УПРАВЛЕНИЯ</span>
@@ -89,33 +90,45 @@ export default function App() {
 
         {/* ОСНОВНОЙ КОНТЕНТ */}
         <div className="flex-grow flex flex-col gap-6 min-w-0">
-          
           {isCombatMode ? (
             <CombatMode favorites={favorites} compareList={compareList} toggleFav={toggleFav} setActiveSpell={setActiveSpell} compareMode={compareMode} setCompareList={setCompareList} setCompareMode={setCompareMode} setShowCompareResults={setShowCompareResults} />
           ) : (
             <>
               {/* ПОИСКОВАЯ СТРОКА */}
               <div className="sticky top-0 z-[60] bg-[#0a0a0a] pt-2 pb-4 border-b-2 border-amber-500/50">
-                <div className="flex flex-wrap gap-4 bg-[#111] p-4 border border-amber-900/30 rounded-lg items-center shadow-2xl">
+                <div className="flex flex-wrap gap-4 bg-[#111] p-4 border border-amber-900/30 rounded-lg items-center shadow-2xl relative">
                   <input type="text" placeholder="Поиск чертежа..." className="bg-black border border-amber-700/50 p-3 rounded text-amber-100 flex-grow outline-none focus:border-amber-400 text-sm" value={search} onChange={(e) => setSearch(e.target.value)} />
                   <div className="flex gap-2 items-center">
                     <select className="bg-black border border-amber-700/50 p-3 rounded text-amber-100 text-sm outline-none" value={levelFilter} onChange={(e) => setLevelFilter(e.target.value)}>
                       <option value="all">Все уровни</option>
                       <option value="Заговор">Заговоры</option>
-                      {[1,2,3,4].map(l => <option key={l} value={String(l)}>{l} уровень</option>)}
+                      {[1,2,3,4,5,6,7,8,9].map(l => <option key={l} value={String(l)}>{l} уровень</option>)}
                     </select>
-                    <button onClick={() => { if(compareMode && compareList.length >= 2) setShowCompareResults(true); setCompareMode(!compareMode); }} className={`px-4 py-3 rounded font-black border-2 text-[10px] transition-all ${compareMode ? 'bg-amber-500 text-black border-white' : 'bg-black text-amber-500 border-amber-900'}`}>
-                        {compareMode ? `АНАЛИЗ` : 'СРАВНИТЬ'}
+                    
+                    <button onClick={handleCompareClick} className={`px-4 py-3 rounded font-black border-2 text-[10px] transition-all ${compareMode ? 'bg-amber-500 text-black border-white' : 'bg-black text-amber-500 border-amber-900'}`}>
+                        {compareMode ? (compareList.length >= 2 ? 'АНАЛИЗ' : 'ОТМЕНА') : 'СРАВНИТЬ'}
                     </button>
-                    <button onClick={() => setShowCategories(!showCategories)} className="px-4 py-3 border border-amber-800/40 rounded hover:bg-amber-900/10 font-bold text-[10px] uppercase text-amber-500">Категории</button>
+
+                    <button onClick={() => setShowCategories(!showCategories)} className={`px-4 py-3 border rounded font-bold text-[10px] uppercase transition-all ${categoryFilter ? 'bg-amber-600 text-black border-amber-400' : 'border-amber-800/40 text-amber-500'}`}>
+                      {categoryFilter || 'Категории'}
+                    </button>
                   </div>
+
+                  {/* ВЫПАДАЮЩЕЕ ОКНО КАТЕГОРИЙ */}
+                  {showCategories && (
+                    <div className="absolute top-full right-0 mt-2 w-64 bg-[#1a1a1a] border-2 border-amber-600 shadow-[0_10px_50px_rgba(0,0,0,0.8)] p-4 grid grid-cols-1 gap-2 z-[210] rounded-xl">
+                      <button onClick={() => {setCategoryFilter(null); setShowCategories(false);}} className="text-left p-2 hover:bg-amber-900/30 text-xs uppercase font-bold text-amber-500">Все категории</button>
+                      {categories.map(cat => (
+                        <button key={cat} onClick={() => {setCategoryFilter(cat); setShowCategories(false);}} className="text-left p-2 hover:bg-amber-600 hover:text-black text-xs uppercase font-bold transition-colors rounded">
+                          {cat}
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
 
-              {/* СЕТКА С ПРАВИЛЬНЫМ РАСПРЕДЕЛЕНИЕМ */}
               <div className="flex flex-col lg:flex-row gap-8">
-                
-                {/* ЛЕВАЯ ЧАСТЬ - КАРТОЧКИ */}
                 <main className="flex-grow space-y-12">
                   {Object.entries(filteredData).map(([letter, spells]) => (
                     <div key={letter}>
@@ -123,7 +136,18 @@ export default function App() {
                       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
                         {spells.map(spell => (
                           <div key={spell.name} className="w-full max-w-[300px]">
-                            <SpellCard spell={spell} isSelected={compareList.some(s => s.name === spell.name)} isFav={favorites.some(f => f.name === spell.name)} onClick={(s) => compareMode ? (compareList.some(i => i.name === s.name) ? setCompareList(prev => prev.filter(i => i.name !== s.name)) : compareList.length < 3 && setCompareList(prev => [...prev, s])) : setActiveSpell(s)} onFav={toggleFav} />
+                            <SpellCard 
+                              spell={spell} 
+                              isSelected={compareList.some(s => s.name === spell.name)} 
+                              isFav={favorites.some(f => f.name === spell.name)} 
+                              onClick={(s) => compareMode 
+                                ? (compareList.some(i => i.name === s.name) 
+                                    ? setCompareList(prev => prev.filter(i => i.name !== s.name)) 
+                                    : compareList.length < 3 && setCompareList(prev => [...prev, s])) 
+                                : setActiveSpell(s)
+                              } 
+                              onFav={toggleFav} 
+                            />
                           </div>
                         ))}
                       </div>
@@ -131,7 +155,6 @@ export default function App() {
                   ))}
                 </main>
 
-                {/* ПРАВАЯ ЧАСТЬ - ФИКСИРОВАННЫЙ АРХИВ */}
                 <aside className="w-full lg:w-[300px] flex-shrink-0 sticky top-[120px] max-h-[calc(100vh-160px)] overflow-y-auto pr-2 custom-scrollbar font-sans">
                   <button onClick={() => setShowFavPane(!showFavPane)} className={`w-full py-3 rounded-t-lg border-2 font-black text-sm transition-all ${showFavPane ? 'bg-amber-600 text-black border-amber-400 shadow-lg' : 'bg-black text-amber-600 border-amber-900'}`}>★ АРХИВ</button>
                   {showFavPane && (
@@ -141,7 +164,6 @@ export default function App() {
                           <div key={f.name} onClick={() => setActiveSpell(f)} className="flex items-start justify-between bg-black p-3 rounded border border-amber-900/30 hover:border-amber-500 cursor-pointer group transition-all">
                             <div className="flex flex-col min-w-0 pr-2">
                               <span className="text-[8px] text-amber-700 font-bold uppercase">{f.level}</span>
-                              {/* Убрали truncate, разрешили перенос текста */}
                               <span className="text-[11px] font-bold text-amber-100 group-hover:text-amber-400 uppercase tracking-tighter break-words leading-tight">{f.name}</span>
                             </div>
                             <button onClick={(e) => { e.stopPropagation(); toggleFav(f); }} className="text-red-900 hover:text-red-500 text-xl leading-none">×</button>
@@ -156,7 +178,16 @@ export default function App() {
         </div>
       </div>
       
-      {/* ... Модальные окна без изменений ... */}
+      {/* РЕНДЕР МОДАЛЬНОГО ОКНА (ТОТ САМЫЙ ПРОПАВШИЙ БЛОК) */}
+      {activeSpell && (
+        <SpellModal 
+          spell={activeSpell} 
+          onClose={() => setActiveSpell(null)} 
+          isFav={favorites.some(f => f.name === activeSpell.name)}
+          onFav={toggleFav}
+        />
+      )}
+
       {showCombatInfo && (
         <div className="fixed inset-0 z-[300] flex items-center justify-center p-4 bg-black/90 backdrop-blur-md" onClick={() => setShowCombatInfo(false)}>
           <div className="bg-[#efe7d6] p-8 rounded-2xl max-w-sm w-full border-4 border-[#3d2314] shadow-[0_0_60px_rgba(0,0,0,0.8)] text-center" onClick={e => e.stopPropagation()}>
