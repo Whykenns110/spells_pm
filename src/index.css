@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Marcellus&family=Spectral:ital,wght@0,400;0,700;1,400&display=swap');
+
+body {
+  font-family: 'Spectral', serif;
+  background-attachment: fixed;
+  /* Добавим легкий эффект старой бумаги на фон */
+  background-image: radial-gradient(circle at center, rgba(30, 30, 30, 0) 0%, rgba(10, 10, 10, 1) 100%);
+}
+
+h1, h2, h3 {
+  font-family: 'Marcellus', serif;
+  letter-spacing: 0.05em;
+}
+
+/* Красивый скроллбар в стиле стимпанк */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #0f0f0f; }
+::-webkit-scrollbar-thumb { background: #d97706; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #fbbf24; }
