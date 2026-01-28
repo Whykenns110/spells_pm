@@ -85,7 +85,7 @@ export default function ParomechanicSpells() {
         `
       },
       {
-        name: "Впрыск спермы",
+        name: "Впрыск спермыы",
         level: "4",
         components: ["М"],
         description: `
