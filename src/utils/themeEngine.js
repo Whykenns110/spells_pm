@@ -2,24 +2,58 @@ export const getSpellTheme = (spell) => {
   if (!spell) return {};
   const name = (spell.name || "").toLowerCase();
   const desc = (spell.description || "").toLowerCase();
-  
-  const purpleKeywords = ["глаз", "молот", "вспышка клапана", "вакуумный рывок", "прорицание"];
-  
+
+  // 1. Фиолетовая тема (Техномагия/Прорицание/Специфические устройства)
+  const purpleKeywords = ["глаз", "молот", "вспышка клапана", "вакуумный рывок", "прорицание", "помехи"];
   if (purpleKeywords.some(key => name.includes(key) || desc.includes(key))) {
-    return { 
-      modalBorder: "border-purple-500", 
-      header: "bg-purple-600", 
-      text: "text-purple-500", 
-      accent: "text-purple-400", // Для внутренних инфо-блоков
-      glow: "shadow-[0_0_30px_rgba(168,85,247,0.3)]" 
+    return {
+      modalBorder: "border-purple-600",
+      header: "bg-purple-700",
+      text: "text-purple-400",
+      accent: "#c084fc",
+      glow: "shadow-[0_0_40px_rgba(168,85,247,0.25)]"
     };
   }
 
-  // ... остальные цвета
-  return { 
-    modalBorder: "border-amber-500", 
-    header: "bg-amber-600", 
+  // 2. Красная тема (Атакующие модули)
+  if (desc.includes("атакующие")) {
+    return {
+      modalBorder: "border-red-600",
+      header: "bg-red-700",
+      text: "text-red-500",
+      accent: "#ef4444",
+      glow: "shadow-[0_0_40px_rgba(239,68,68,0.15)]"
+    };
+  }
+
+  // 3. Синяя тема (Защитные модули)
+  if (desc.includes("защитные")) {
+    return {
+      modalBorder: "border-blue-600",
+      header: "bg-blue-700",
+      text: "text-blue-400",
+      accent: "#60a5fa",
+      glow: "shadow-[0_0_40px_rgba(59,130,246,0.15)]"
+    };
+  }
+
+  // 4. Зеленая тема (Регенерация)
+  if (desc.includes("регенерирующие")) {
+    return {
+      modalBorder: "border-emerald-600",
+      header: "bg-emerald-700",
+      text: "text-emerald-400",
+      accent: "#34d399",
+      glow: "shadow-[0_0_40px_rgba(16,185,129,0.15)]"
+    };
+  }
+
+  // 5. Стандартная янтарная тема (Паромеханика)
+  return {
+    modalBorder: "border-amber-600",
+    header: "bg-amber-600",
     text: "text-amber-500",
-    accent: "text-amber-400" 
+    accent: "#fbbf24",
+    glow: ""
   };
 };
