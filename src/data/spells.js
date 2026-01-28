@@ -148,7 +148,7 @@ export const spellsData = {
       components: ["В", "М"],
       description: `
         <h3 class="text-amber-500 text-2xl font-black mb-2 uppercase italic tracking-tighter">Кристальный глаз</h3>
-        <p class="text-sm mb-1 text-amber-900 font-bold uppercase tracking-widest">Заговор | Помехи – Паралич</p>
+        <p class="text-sm mb-1 text-purple-900 font-bold uppercase tracking-widest">Заговор | Помехи – Оглушение</p>
         <div class="grid grid-cols-2 gap-2 text-sm bg-amber-950/20 p-3 rounded border border-amber-900/30 mb-4 font-sans">
           <p><strong>Время:</strong> 1 действие</p>
           <p><strong>Дистанция:</strong> Касание</p>
