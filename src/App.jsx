@@ -189,16 +189,42 @@ export default function App() {
       )}
 
       {showCompareResults && (
-        <div className="fixed inset-0 z-[600] bg-black/98 p-6 overflow-y-auto flex flex-col items-center">
-          <div className="w-full max-w-6xl flex justify-between mb-8 border-b border-amber-900/30 pb-4 items-center">
-            <h2 className="text-2xl font-black text-amber-500 uppercase italic">Анализ систем</h2>
-            <button onClick={() => {setShowCompareResults(false); setCompareList([]); setCompareMode(false);}} className="px-6 py-2 bg-amber-600 text-black font-black rounded text-xs uppercase">Закрыть</button>
-          </div>
-          <div className="flex flex-wrap justify-center gap-6">
-            {compareList.map(s => <div key={s.name} className="w-[380px]"><SpellModal spell={s} theme={getSpellTheme(s)} isCompare={true} onClose={() => setCompareList(p => p.filter(x => x.name !== s.name))} /></div>)}
-          </div>
+  <div className="fixed inset-0 z-[700] bg-black/80 backdrop-blur-xl p-6 overflow-y-auto flex flex-col items-center animate-in fade-in duration-300">
+    <div className="w-full max-w-6xl flex justify-between mb-8 border-b border-amber-900/30 pb-4 items-center">
+      <h2 className="text-2xl font-black text-amber-500 uppercase italic">Анализ систем</h2>
+      <button 
+        onClick={() => {setShowCompareResults(false); setCompareList([]); setCompareMode(false);}} 
+        className="px-6 py-2 bg-amber-600 text-black font-black rounded text-xs uppercase hover:bg-amber-400 transition-colors"
+      >
+        Закрыть
+      </button>
+    </div>
+    
+    <div className="flex flex-wrap justify-center gap-6 w-full">
+      {compareList.map(s => (
+        <div key={s.name} className="w-full max-w-[400px]">
+          <SpellModal 
+            spell={s} 
+            theme={getSpellTheme(s)} 
+            isCompare={true} 
+            onCopy={copyToClipboard}
+            onClose={() => {
+              const newList = compareList.filter(x => x.name !== s.name);
+              // АВТОВЫХОД: если после удаления осталось меньше 2-х заклинаний
+              if (newList.length < 2) {
+                setShowCompareResults(false);
+                setCompareList([]);
+                setCompareMode(false);
+              } else {
+                setCompareList(newList);
+              }
+            }} 
+          />
         </div>
-      )}
+      ))}
+    </div>
+  </div>
+)}
 
       {showCombatInfo && (
         <div className="fixed inset-0 z-[600] flex items-center justify-center p-4 bg-black/90" onClick={() => setShowCombatInfo(false)}>
