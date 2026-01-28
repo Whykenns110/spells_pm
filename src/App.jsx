@@ -6,6 +6,7 @@ import SpellModal from "./components/SpellModal";
 import CombatMode from "./modules/CombatMode";
 import DiceRoller from "./components/DiceRoller"; // Подключили кости
 import ikona from "./ikona.jpg";
+import SidebarTools from "./components/SidebarTools"; // Подключили новые инструменты
 
 export default function App() {
   const [search, setSearch] = useState("");
@@ -73,7 +74,7 @@ export default function App() {
         <div className="max-w-[1400px] mx-auto border-b border-amber-900/20 pb-2">
           <h1 className="text-3xl md:text-5xl font-black text-amber-500 uppercase italic tracking-tighter">АРХИВ ПАРОМЕХАНИКА</h1>
           <div className="flex justify-between items-center mt-1">
-            <p className="text-amber-700 text-[10px] uppercase tracking-[0.3em] font-sans font-bold italic">Modular Engine v.0.8.7</p>
+            <p className="text-amber-700 text-[10px] uppercase tracking-[0.3em] font-sans font-bold italic">Modular Engine v.0.8.7    этот шикарный сайт навайбкодил Whykenns</p>
           </div>
         </div>
       </header>
@@ -116,6 +117,11 @@ export default function App() {
                   {['В', 'С', 'М'].map(c => (
                     <button key={c} onClick={() => setCompFilter(p => p.includes(c) ? p.filter(x => x !== c) : [...p, c])} className={`w-7 h-7 rounded text-[9px] font-black transition-all ${compFilter.includes(c) ? 'bg-amber-600 text-black shadow-inner' : 'text-amber-900 hover:text-amber-700'}`}>{c}</button>
                   ))}
+                </div>
+                {/* КНОПКИ КАЛЬКУЛЯТОРА И БЛОКНОТА */}
+                <div className="flex gap-2 ml-auto">
+                  <SidebarTools type="calc" />
+                  <SidebarTools type="notes" />
                 </div>
               </div>
               <div className="flex gap-2 items-center border-t border-amber-900/10 pt-2 relative">
@@ -163,6 +169,9 @@ export default function App() {
                   ))}
                 </main>
                 <aside className="w-full lg:w-[260px] sticky top-0 h-fit space-y-4">
+                  {/* КНОПКА ИНФО ПАРОМЕХАНИКА */}
+                  <SidebarTools type="info" />
+
                   <div className="bg-black border-2 border-amber-900/40 rounded-lg overflow-hidden shadow-2xl">
                     <img src={ikona} alt="Механик" className="w-full h-auto object-cover grayscale opacity-80" />
                     <div className="bg-amber-900/10 p-2 text-center border-t border-amber-900/20">
@@ -224,14 +233,13 @@ export default function App() {
         </div>
       )}
 
-      {/* НОВОЕ ОКНО ИНФОРМАЦИИ ДЛЯ ДАЙСОВ */}
       {showDiceInfo && (
         <div className="fixed inset-0 z-[800] flex items-center justify-center p-4 bg-black/90 backdrop-blur-md" onClick={() => setShowDiceInfo(false)}>
           <div className="bg-[#efe7d6] p-8 rounded-2xl max-w-sm w-full border-4 border-[#3d2314] text-center" onClick={e => e.stopPropagation()}>
             <h3 className="text-[#3d2314] font-black text-2xl uppercase mb-4 italic">Терминал Удачи</h3>
             <div className="text-[#4d2d1a] font-bold text-sm space-y-4 mb-6 text-left">
-              <p>• Нажми на **Корпус Кости** для инициации броска.</p>
-              <p>• Используй **Красный Триггер (×)** справа от кости, чтобы сбросить значение до заводского (1кX).</p>
+              <p>• Нажми на Корпус Кости для инициации броска.</p>
+              <p>• Используй Красный Триггер (×) справа от кости, чтобы сбросить значение до заводского (1кX).</p>
             </div>
             <button onClick={() => setShowDiceInfo(false)} className="w-full bg-[#3d2314] text-amber-500 py-4 rounded-lg font-black uppercase hover:bg-black transition-colors">Понял</button>
           </div>

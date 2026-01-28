@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>my-spels</title>
+  <title>Архив Паромеханика</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100..800&display=swap" rel="stylesheet">
   
   <script src="https://cdn.tailwindcss.com"></script>
 
@@ -17,7 +17,7 @@
       theme: {
         extend: {
           fontFamily: {
-            // Теперь классы font-sans, font-serif и font-mono будут использовать JetBrains Mono
+            // Принудительно ставим JetBrains Mono на все стандартные классы
             sans: ['"JetBrains Mono"', 'monospace'],
             serif: ['"JetBrains Mono"', 'monospace'],
             mono: ['"JetBrains Mono"', 'monospace'],
@@ -26,6 +26,23 @@
       },
     }
   </script>
+
+  <style>
+    /* Назначаем шрифт всему документу через !important, чтобы точно сработало */
+    * {
+      font-family: 'JetBrains Mono', monospace !important;
+    }
+
+    /* Убираем курсив там, где ты просил (заголовки и кнопки) */
+    h1, h2, h3, h4, h5, h6, button, select, input, .title, .spell-name {
+      font-style: normal !important;
+      text-transform: uppercase; /* Опционально: сделает заголовки более 'чертежными' */
+    }
+
+    /* Если хочешь убрать курсив ВООБЩЕ у всего текста на сайте, 
+       удали символы комментария /* ниже: */
+    /* * { font-style: normal !important; } */
+  </style>
 </head>
 <body>
   <div id="root"></div>
