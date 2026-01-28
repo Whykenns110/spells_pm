@@ -15,6 +15,7 @@ export default function App() {
   const [activeSpell, setActiveSpell] = useState(null);
   const [isCombatMode, setIsCombatMode] = useState(false);
   const [showCombatInfo, setShowCombatInfo] = useState(false);
+  const [showDiceInfo, setShowDiceInfo] = useState(false); // Состояние для инфо дайсов
   const [compFilter, setCompFilter] = useState([]); 
   const [distFilter, setDistFilter] = useState("all");
   const [compareMode, setCompareMode] = useState(false);
@@ -87,7 +88,8 @@ export default function App() {
             </button>
             <button onClick={() => setShowCombatInfo(true)} className="mt-2 w-8 h-8 bg-[#3d2314] rounded-full flex items-center justify-center text-amber-500 font-black italic text-xs shadow-lg hover:bg-black transition-colors border border-amber-900/20">i</button>
             <div className="w-full border-t border-black/10 my-4"></div>
-            <DiceRoller />
+            {/* Передаем функцию открытия инфо в компонент дайсов */}
+            <DiceRoller setShowInfo={setShowDiceInfo} />
           </div>
         </div>
 
@@ -117,7 +119,9 @@ export default function App() {
                 </div>
               </div>
               <div className="flex gap-2 items-center border-t border-amber-900/10 pt-2 relative">
-                  <button onClick={() => setShowCategories(!showCategories)} className={`px-3 py-1.5 border rounded font-bold text-[9px] uppercase transition-all ${showCategories ? 'bg-amber-500 text-black' : 'border-amber-800/40 text-amber-500 hover:border-amber-500'}`}>Категории ▼</button>
+                  <button onClick={() => setShowCategories(!showCategories)} className={`px-3 py-1.5 border rounded font-bold text-[9px] uppercase transition-all ${showCategories || categoryFilter ? 'bg-amber-500 text-black' : 'border-amber-800/40 text-amber-500 hover:border-amber-500'}`}>
+                    {categoryFilter ? `Категория: ${categoryFilter} ▼` : 'Категории ▼'}
+                  </button>
                   <div className="ml-auto flex gap-1">
                     <button onClick={() => { if(compareMode && compareList.length >= 2) setShowCompareResults(true); setCompareMode(!compareMode); }} className={`px-4 py-1.5 rounded font-black border-2 text-[9px] transition-all ${compareMode ? 'bg-amber-500 text-black border-white shadow-lg' : 'bg-black text-amber-500 border-amber-900 hover:border-amber-500'}`}>
                       {compareMode ? `АНАЛИЗ (${compareList.length}/3)` : 'СРАВНИТЬ'}
@@ -128,6 +132,9 @@ export default function App() {
                   </div>
                   {showCategories && (
                     <div className="absolute top-full left-0 mt-2 bg-[#efe7d6] text-black rounded-lg shadow-2xl z-[500] p-4 border-2 border-amber-700 w-[500px] grid grid-cols-3 gap-4 animate-in zoom-in-95 duration-200">
+                        <div className="col-span-3 border-b border-black/10 pb-2 mb-2">
+                           <button onClick={() => {setCategoryFilter(null); setShowCategories(false);}} className="w-full text-center py-1 bg-amber-900/10 hover:bg-amber-900/20 text-[10px] font-black uppercase rounded transition-colors italic">× Сбросить категорию ×</button>
+                        </div>
                         {Object.entries(categories).map(([cat, subs]) => (
                         <div key={cat} className="space-y-1">
                           <div className="font-black text-[8px] uppercase text-amber-900/40 mb-1 border-b border-black/5">{cat}</div>
@@ -213,6 +220,20 @@ export default function App() {
             <h3 className="text-[#3d2314] font-black text-2xl uppercase mb-4 italic">Внимание</h3>
             <p className="text-[#4d2d1a] font-bold text-sm mb-6">Боевой протокол работает только с заклинаниями в ★ Избранном.</p>
             <button onClick={() => setShowCombatInfo(false)} className="w-full bg-[#3d2314] text-amber-500 py-4 rounded-lg font-black uppercase">Принято</button>
+          </div>
+        </div>
+      )}
+
+      {/* НОВОЕ ОКНО ИНФОРМАЦИИ ДЛЯ ДАЙСОВ */}
+      {showDiceInfo && (
+        <div className="fixed inset-0 z-[800] flex items-center justify-center p-4 bg-black/90 backdrop-blur-md" onClick={() => setShowDiceInfo(false)}>
+          <div className="bg-[#efe7d6] p-8 rounded-2xl max-w-sm w-full border-4 border-[#3d2314] text-center" onClick={e => e.stopPropagation()}>
+            <h3 className="text-[#3d2314] font-black text-2xl uppercase mb-4 italic">Терминал Удачи</h3>
+            <div className="text-[#4d2d1a] font-bold text-sm space-y-4 mb-6 text-left">
+              <p>• Нажми на **Корпус Кости** для инициации броска.</p>
+              <p>• Используй **Красный Триггер (×)** справа от кости, чтобы сбросить значение до заводского (1кX).</p>
+            </div>
+            <button onClick={() => setShowDiceInfo(false)} className="w-full bg-[#3d2314] text-amber-500 py-4 rounded-lg font-black uppercase hover:bg-black transition-colors">Понял</button>
           </div>
         </div>
       )}
