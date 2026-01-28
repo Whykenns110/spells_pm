@@ -3,12 +3,16 @@ import React, { useMemo, useState } from "react";
 export default function ParomechanicSpells() {
   const [search, setSearch] = useState("");
   const [levelFilter, setLevelFilter] = useState("all");
-  const [componentFilter, setComponentFilter] = useState([]);
   const [categoryFilter, setCategoryFilter] = useState(null);
   const [showCategories, setShowCategories] = useState(false);
   const [activeSpell, setActiveSpell] = useState(null);
   const [favorites, setFavorites] = useState([]);
   const [showFavPane, setShowFavPane] = useState(true);
+
+  // Состояния для сравнения
+  const [compareMode, setCompareMode] = useState(false);
+  const [compareList, setCompareList] = useState([]);
+  const [showCompareResults, setShowCompareResults] = useState(false);
 
   const categories = {
     "Атакующие": ["Дальний", "Ближний", "Средний"],
@@ -18,25 +22,20 @@ export default function ParomechanicSpells() {
   };
 
   const getTheme = (description) => {
-    if (description.includes("Атакующие")) return {
-      text: "text-red-500", bg: "bg-red-950/20", border: "border-red-900/30",
-      accent: "text-red-900", modalBorder: "border-red-500", header: "bg-red-600"
+    if (description?.includes("Атакующие")) return {
+      modalBorder: "border-red-500", header: "bg-red-600"
     };
-    if (description.includes("Защитные")) return {
-      text: "text-blue-500", bg: "bg-blue-950/20", border: "border-blue-900/30",
-      accent: "text-blue-900", modalBorder: "border-blue-500", header: "bg-blue-600"
+    if (description?.includes("Защитные")) return {
+      modalBorder: "border-blue-500", header: "bg-blue-600"
     };
-    if (description.includes("Регенерирующие")) return {
-      text: "text-emerald-500", bg: "bg-emerald-950/20", border: "border-emerald-900/30",
-      accent: "text-emerald-900", modalBorder: "border-emerald-500", header: "bg-emerald-600"
+    if (description?.includes("Регенерирующие")) return {
+      modalBorder: "border-emerald-500", header: "bg-emerald-600"
     };
-    if (description.includes("Помехи")) return {
-      text: "text-purple-500", bg: "bg-purple-950/20", border: "border-purple-900/30",
-      accent: "text-purple-900", modalBorder: "border-purple-500", header: "bg-purple-600"
+    if (description?.includes("Помехи")) return {
+      modalBorder: "border-purple-500", header: "bg-purple-600"
     };
     return {
-      text: "text-amber-500", bg: "bg-black/30", border: "border-amber-900/20",
-      accent: "text-amber-700", modalBorder: "border-amber-500", header: "bg-amber-600"
+      modalBorder: "border-amber-500", header: "bg-amber-600"
     };
   };
 
@@ -144,6 +143,18 @@ export default function ParomechanicSpells() {
     ]
   };
 
+  const handleSpellClick = (spell) => {
+    if (compareMode) {
+      if (compareList.find(s => s.name === spell.name)) {
+        setCompareList(prev => prev.filter(s => s.name !== spell.name));
+      } else if (compareList.length < 3) {
+        setCompareList(prev => [...prev, spell]);
+      }
+    } else {
+      setActiveSpell(spell);
+    }
+  };
+
   const toggleFavorite = (spell, e) => {
     e.stopPropagation();
     setFavorites(prev => 
@@ -153,111 +164,115 @@ export default function ParomechanicSpells() {
     );
   };
 
+  const toggleCompareMode = () => {
+    if (compareMode) {
+      if (compareList.length >= 2) {
+        setShowCompareResults(true);
+      }
+      setCompareMode(false);
+    } else {
+      setCompareMode(true);
+      setShowCompareResults(false);
+      setCompareList([]);
+    }
+  };
+
   const filteredData = useMemo(() => {
     const result = {};
     Object.entries(spellsData).forEach(([letter, spells]) => {
       const filtered = spells.filter(s => {
         const matchesSearch = s.name.toLowerCase().includes(search.toLowerCase());
         const matchesLevel = levelFilter === "all" || s.level === levelFilter;
-        const matchesComp = componentFilter.length === 0 || componentFilter.every(c => s.components.includes(c));
         const matchesCat = !categoryFilter || s.description.includes(categoryFilter);
-        return matchesSearch && matchesLevel && matchesComp && matchesCat;
+        return matchesSearch && matchesLevel && matchesCat;
       });
       if (filtered.length) result[letter] = filtered;
     });
     return result;
-  }, [search, levelFilter, componentFilter, categoryFilter]);
-
-  const activeTheme = activeSpell ? getTheme(activeSpell.description) : null;
+  }, [search, levelFilter, categoryFilter]);
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-amber-50 p-4 md:p-10 font-serif">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         
         <header className="border-b-2 border-amber-700/50 pb-6 mb-10">
-          <h1 className="text-4xl md:text-6xl font-black text-amber-500 tracking-tighter uppercase italic">
-            ЗАКЛИНАНИЯ ПАРОМЕХАНИКА
-          </h1>
-          <p className="text-amber-700 text-sm mt-2 tracking-[0.3em] font-sans uppercase">Системы v.2.5 | Архив активен</p>
+          <h1 className="text-4xl md:text-6xl font-black text-amber-500 uppercase italic">ЗАКЛИНАНИЯ ПАРОМЕХАНИКА</h1>
+          <p className="text-amber-700 text-sm mt-2 tracking-widest font-sans uppercase">v.2.6 | Модуль сравнения</p>
         </header>
 
-        <div className="flex flex-wrap gap-4 mb-10 bg-[#111] p-6 border border-amber-900/30 rounded-lg items-center relative">
+        {/* ПАНЕЛЬ УПРАВЛЕНИЯ */}
+        <div className="flex flex-wrap gap-4 mb-10 bg-[#111] p-6 border border-amber-900/30 rounded-lg items-center shadow-2xl">
           <input 
-            type="text" placeholder="Поиск модуля..." 
-            className="bg-black border border-amber-700/50 p-3 rounded text-amber-100 flex-grow outline-none focus:border-amber-400 text-lg"
+            type="text" placeholder="Поиск..." 
+            className="bg-black border border-amber-700/50 p-3 rounded text-amber-100 flex-grow outline-none focus:border-amber-400"
             value={search} onChange={(e) => setSearch(e.target.value)}
           />
           
-          <select 
-            className="bg-black border border-amber-700/50 p-3 rounded text-amber-100 outline-none cursor-pointer text-lg"
-            value={levelFilter} onChange={(e) => setLevelFilter(e.target.value)}
-          >
-            <option value="all">Все уровни</option>
-            <option value="Заговор">Заговоры</option>
-            {[1,2,3,4].map(l => <option key={l} value={String(l)}>{l} уровень</option>)}
-          </select>
-
-          <div className="relative">
-            <button 
-              onClick={() => setShowCategories(!showCategories)}
-              className="px-6 py-3 border border-amber-800/40 rounded hover:bg-amber-900/10 text-lg font-bold transition-colors"
+          <div className="flex gap-2">
+            <select 
+              className="bg-black border border-amber-700/50 p-3 rounded text-amber-100 outline-none cursor-pointer"
+              value={levelFilter} onChange={(e) => setLevelFilter(e.target.value)}
             >
-              Категории {categoryFilter ? `(${categoryFilter})` : ""}
+              <option value="all">Все уровни</option>
+              <option value="Заговор">Заговоры</option>
+              {[1,2,3,4].map(l => <option key={l} value={String(l)}>{l} уровень</option>)}
+            </select>
+
+            <button 
+              onClick={toggleCompareMode}
+              className={`px-6 py-3 rounded font-black transition-all border-2 ${compareMode ? 'bg-amber-500 text-black border-white animate-pulse' : 'bg-black text-amber-500 border-amber-900 hover:border-amber-500'}`}
+            >
+              {compareMode ? `ГОТОВО (${compareList.length})` : 'СРАВНИТЬ'}
             </button>
-            {showCategories && (
-              <div className="absolute top-full left-0 mt-2 w-64 bg-amber-100 text-black rounded-lg shadow-2xl z-50 p-4">
-                {Object.entries(categories).map(([cat, subs]) => (
-                  <div key={cat} className="mb-3">
-                    <div className="font-black text-xs uppercase text-amber-900 border-b border-amber-300 mb-1">{cat}</div>
-                    {subs.map(s => (
-                      <div key={s} onClick={() => {setCategoryFilter(s); setShowCategories(false);}} className="cursor-pointer hover:bg-amber-300 px-2 py-1 text-sm font-bold">{s}</div>
-                    ))}
-                  </div>
-                ))}
-              </div>
+            
+            {compareMode && (
+              <button 
+                onClick={() => {setCompareMode(false); setCompareList([]);}}
+                className="px-6 py-3 bg-red-950 text-red-500 border-2 border-red-900 rounded font-black uppercase text-sm"
+              >
+                Отменить
+              </button>
             )}
           </div>
 
-          <button 
-            onClick={() => {setSearch(""); setLevelFilter("all"); setCategoryFilter(null); setComponentFilter([]);}} 
-            className="px-4 py-2 bg-red-900/10 text-red-500 rounded border border-red-900/50 hover:bg-red-900/20 text-xs font-bold uppercase"
-          >
-            Сброс
-          </button>
+          <button onClick={() => setShowCategories(!showCategories)} className="px-6 py-3 border border-amber-800/40 rounded hover:bg-amber-900/10 font-bold">Категории</button>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-10">
-          <main className="lg:col-span-3 space-y-16">
+          <main className="lg:col-span-3 space-y-12">
             {Object.entries(filteredData).map(([letter, spells]) => (
               <div key={letter}>
-                <h2 className="text-4xl text-amber-600 font-black mb-8 border-b-2 border-amber-900/20 pb-2">{letter}</h2>
+                <h2 className="text-4xl text-amber-600 font-black mb-6 border-b border-amber-900/20 pb-2">{letter}</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {spells.map((spell) => {
+                    const isSelected = compareList.find(s => s.name === spell.name);
                     const isFav = favorites.find(f => f.name === spell.name);
                     return (
                       <div 
-                        key={spell.name} onClick={() => setActiveSpell(spell)}
-                        className="group relative p-6 bg-[#141414] border-2 border-amber-900/30 rounded-xl cursor-pointer hover:border-amber-500 hover:bg-amber-900/5 transition-all duration-300 shadow-xl"
+                        key={spell.name} onClick={() => handleSpellClick(spell)}
+                        className={`group relative p-6 bg-[#141414] border-2 rounded-xl cursor-pointer transition-all duration-300 shadow-xl 
+                        ${isSelected ? 'border-amber-400 shadow-[0_0_20px_rgba(251,191,36,0.3)] scale-[1.02] bg-amber-900/10' : 'border-amber-900/30 hover:border-amber-500'}`}
                       >
-                        <button 
-                          onClick={(e) => toggleFavorite(spell, e)}
-                          className={`absolute top-4 right-12 text-2xl transition-colors z-10 ${isFav ? 'text-amber-400' : 'text-amber-900 hover:text-amber-600'}`}
-                        >
-                          ★
-                        </button>
-                        <div className="flex justify-between items-start">
-                          <div>
-                            <h3 className="text-2xl font-bold text-amber-100 uppercase group-hover:text-amber-400 leading-tight">{spell.name}</h3>
-                            <div className="flex gap-2 mt-3">
-                              {spell.components.map(c => (
-                                <span key={c} className="text-xs px-2 py-1 border border-amber-800 text-amber-700 rounded font-bold bg-black">{c}</span>
-                              ))}
-                            </div>
-                          </div>
-                          <span className="text-xs font-black py-1.5 px-3 bg-amber-950 text-amber-500 rounded border border-amber-700 uppercase">
+                        <div className="flex justify-between items-start mb-2">
+                          <h3 className="text-xl font-bold text-amber-100 uppercase group-hover:text-amber-400 leading-tight">{spell.name}</h3>
+                          <span className="text-[10px] font-black py-1 px-2 bg-amber-950 text-amber-500 rounded border border-amber-700 whitespace-nowrap">
                             {spell.level === "Заговор" ? "Заговор" : `${spell.level}-ур`}
                           </span>
                         </div>
+                        
+                        <div className="flex justify-between items-end mt-8">
+                          <div className="flex gap-1">
+                            {spell.components.map(c => <span key={c} className="text-[10px] px-2 py-0.5 bg-black border border-amber-900 text-amber-700 rounded font-bold">{c}</span>)}
+                          </div>
+                          {/* Звездочка перенесена вниз */}
+                          <button 
+                            onClick={(e) => toggleFavorite(spell, e)}
+                            className={`text-2xl transition-transform hover:scale-125 ${isFav ? 'text-amber-400' : 'text-amber-900 hover:text-amber-500'}`}
+                          >
+                            ★
+                          </button>
+                        </div>
+                        {isSelected && <div className="absolute inset-0 border-2 border-amber-400 rounded-xl animate-ping opacity-20 pointer-events-none"></div>}
                       </div>
                     );
                   })}
@@ -267,59 +282,87 @@ export default function ParomechanicSpells() {
           </main>
 
           <aside className="lg:col-span-1 space-y-4">
-            <div className="flex gap-2">
-              <button 
-                onClick={() => setShowFavPane(!showFavPane)}
-                className={`flex-grow py-3 rounded border transition-all font-black flex items-center justify-center gap-2 ${showFavPane ? 'bg-amber-600 text-black border-amber-400' : 'bg-black text-amber-600 border-amber-900'}`}
-              >
-                ★ ИЗБРАННОЕ
-              </button>
-              <div className="bg-[#0f0f0f] border-2 border-amber-900/50 rounded-lg p-3 flex flex-col items-center justify-center min-w-[70px]">
-                <span className="text-[10px] text-amber-700 uppercase font-bold leading-none mb-1 text-center">Всего</span>
-                <span className="text-amber-500 font-mono text-xl font-black">{Object.values(filteredData).flat().length}</span>
-              </div>
-            </div>
-
-            <div className={`overflow-hidden transition-all duration-500 ease-in-out ${showFavPane ? 'max-h-[1200px] opacity-100' : 'max-h-0 opacity-0'}`}>
-              <div className="bg-[#111] border-2 border-amber-600/30 rounded-xl p-4 shadow-2xl">
-                <div className="flex justify-center mb-4 border-b border-amber-900/30 pb-2">
-                  <span className="text-amber-600 text-xl animate-pulse">★</span>
-                </div>
-                
-                <div className="space-y-2">
-                  {favorites.length === 0 ? (
-                    <p className="text-center text-amber-900 text-[10px] uppercase py-4 italic tracking-widest leading-relaxed">Список модулей в памяти пуст</p>
-                  ) : (
-                    favorites.map(spell => (
-                      <div 
-                        key={spell.name}
-                        onClick={() => setActiveSpell(spell)}
-                        className="flex items-center justify-between bg-black p-3 rounded border border-amber-900/30 hover:border-amber-500 cursor-pointer group transition-all"
-                      >
-                        <div className="flex flex-col">
-                          <span className="text-[10px] text-amber-700 font-bold uppercase leading-none mb-1">{spell.level}</span>
-                          <span className="text-sm font-bold text-amber-100 group-hover:text-amber-400 truncate w-32">{spell.name}</span>
-                        </div>
-                        <button onClick={(e) => toggleFavorite(spell, e)} className="text-red-900 hover:text-red-500 text-xl px-2">×</button>
+            <button onClick={() => setShowFavPane(!showFavPane)} className={`w-full py-4 rounded-lg border-2 font-black transition-all ${showFavPane ? 'bg-amber-600 text-black border-amber-400 shadow-[0_0_15px_rgba(217,119,6,0.4)]' : 'bg-black text-amber-600 border-amber-900'}`}>
+              ★ ИЗБРАННОЕ
+            </button>
+            
+            <div className={`overflow-hidden transition-all duration-500 ${showFavPane ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'}`}>
+              <div className="bg-[#111] border-2 border-amber-600/30 rounded-xl p-4 space-y-2 shadow-2xl tracking-tighter">
+                {favorites.length === 0 ? (
+                    <p className="text-center text-amber-900 text-[10px] uppercase py-4 italic">Архив пуст</p>
+                ) : (
+                  favorites.map(spell => (
+                    <div key={spell.name} onClick={() => setActiveSpell(spell)} className="flex items-center justify-between bg-black p-3 rounded border border-amber-900/30 hover:border-amber-500 cursor-pointer group">
+                      <div className="flex flex-col">
+                        <span className="text-[9px] text-amber-700 font-bold uppercase">{spell.level}</span>
+                        <span className="text-sm font-bold text-amber-100 truncate w-32">{spell.name}</span>
                       </div>
-                    ))
-                  )}
-                </div>
+                      <button onClick={(e) => toggleFavorite(spell, e)} className="text-red-900 hover:text-red-500 text-xl px-2">×</button>
+                    </div>
+                  ))
+                )}
               </div>
             </div>
           </aside>
         </div>
 
-        {activeSpell && (
+        {/* РЕЖИМ СРАВНЕНИЯ (РЕЗУЛЬТАТЫ) */}
+        {showCompareResults && (
+          <div className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl p-6 overflow-y-auto">
+             <div className="max-w-7xl mx-auto h-full flex flex-col">
+                <div className="flex justify-between items-center mb-8 border-b border-amber-900/30 pb-4">
+                  <h2 className="text-3xl font-black text-amber-500 italic uppercase">Анализ модулей</h2>
+                  <button 
+                    onClick={() => {setShowCompareResults(false); setCompareList([]);}}
+                    className="px-8 py-3 bg-amber-600 text-black font-black rounded-lg hover:bg-amber-400 shadow-lg transition-all"
+                  >
+                    ЗАКРЫТЬ ВСЁ
+                  </button>
+                </div>
+
+                <div className={`grid gap-6 flex-grow ${
+                  compareList.length === 3 ? 'grid-cols-2 lg:grid-cols-6' : 'grid-cols-1 lg:grid-cols-2'
+                }`}>
+                  {compareList.map((spell, idx) => {
+                    const theme = getTheme(spell.description);
+                    const isSpanning = compareList.length === 3 && idx === 0;
+                    return (
+                      <div 
+                        key={spell.name}
+                        className={`bg-[#1a1a1a] border-2 ${theme.modalBorder} rounded-2xl overflow-hidden flex flex-col shadow-2xl transition-all duration-500
+                        ${isSpanning ? 'lg:col-span-6 lg:max-w-2xl lg:mx-auto w-full' : 'lg:col-span-3'}`}
+                      >
+                        <div className={`${theme.header} p-3 flex justify-between items-center text-black font-black uppercase`}>
+                          <span className="text-xs">{spell.name}</span>
+                          <button 
+                            onClick={() => {
+                              const newList = compareList.filter(s => s.name !== spell.name);
+                              if (newList.length < 2) { setShowCompareResults(false); setCompareList([]); }
+                              else setCompareList(newList);
+                            }}
+                            className="text-2xl leading-none hover:scale-125 transition-transform"
+                          >&times;</button>
+                        </div>
+                        <div className="p-8 overflow-y-auto max-h-[65vh] font-sans" dangerouslySetInnerHTML={{ __html: spell.description }} />
+                      </div>
+                    );
+                  })}
+                </div>
+             </div>
+          </div>
+        )}
+
+        {/* ОБЫЧНАЯ МОДАЛКА */}
+        {activeSpell && !showCompareResults && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/95 backdrop-blur-md" onClick={() => setActiveSpell(null)}>
-            <div className={`bg-[#1a1a1a] border-2 ${activeTheme.modalBorder} max-w-2xl w-full rounded-2xl overflow-hidden shadow-2xl animate-in zoom-in-95 duration-200`} onClick={e => e.stopPropagation()}>
-              <div className={`${activeTheme.header} p-4 flex justify-between items-center text-black font-black uppercase italic`}>
-                <span className="text-sm tracking-tighter">Спецификация заклинания</span>
+            <div className={`bg-[#1a1a1a] border-2 ${getTheme(activeSpell.description).modalBorder} max-w-2xl w-full rounded-2xl overflow-hidden shadow-2xl`} onClick={e => e.stopPropagation()}>
+              <div className={`${getTheme(activeSpell.description).header} p-4 flex justify-between items-center text-black font-black uppercase italic`}>
+                <span className="text-sm">Спецификация модуля</span>
                 <button onClick={() => setActiveSpell(null)} className="text-3xl leading-none hover:rotate-90 transition-transform">&times;</button>
               </div>
               <div className="p-10 text-amber-50/90 text-lg leading-relaxed max-h-[75vh] overflow-y-auto font-sans" dangerouslySetInnerHTML={{ __html: activeSpell.description }} />
               <div className="p-6 bg-black/40 text-right border-t border-white/10">
-                <button onClick={() => setActiveSpell(null)} className={`px-10 py-3 ${activeTheme.header} text-black font-black uppercase text-sm rounded-lg hover:opacity-80 transition-all shadow-lg`}>Закрыть</button>
+                <button onClick={() => setActiveSpell(null)} className={`px-10 py-3 ${getTheme(activeSpell.description).header} text-black font-black uppercase text-sm rounded-lg`}>Закрыть</button>
               </div>
             </div>
           </div>
