@@ -4,7 +4,8 @@ import { getSpellTheme } from "./utils/themeEngine";
 import SpellCard from "./components/SpellCard";
 import SpellModal from "./components/SpellModal";
 import CombatMode from "./modules/CombatMode";
-import ikona from "./ikona.jpg"; // Путь к твоей картинке
+import DiceRoller from "./components/DiceRoller"; // Подключили кости
+import ikona from "./ikona.jpg";
 
 export default function App() {
   const [search, setSearch] = useState("");
@@ -71,19 +72,22 @@ export default function App() {
         <div className="max-w-[1400px] mx-auto border-b border-amber-900/20 pb-2">
           <h1 className="text-3xl md:text-5xl font-black text-amber-500 uppercase italic tracking-tighter">АРХИВ ПАРОМЕХАНИКА</h1>
           <div className="flex justify-between items-center mt-1">
-            <p className="text-amber-700 text-[10px] uppercase tracking-[0.3em] font-sans font-bold italic">Modular Engine v.8.3</p>
+            <p className="text-amber-700 text-[10px] uppercase tracking-[0.3em] font-sans font-bold italic">Modular Engine v.0.8.7</p>
           </div>
         </div>
       </header>
 
       <div className="flex gap-4 px-4 md:px-10 pb-4 max-w-[1600px] mx-auto w-full flex-grow overflow-hidden relative">
+        {/* ЛЕВАЯ ПАНЕЛЬ С ДАЙСАМИ */}
         <div className="w-20 md:w-28 flex-shrink-0 flex flex-col h-full z-[200]">
-          <div className="bg-amber-600 py-2 rounded-t-xl text-center font-black text-[8px] text-black uppercase">Система</div>
-          <div className="bg-amber-500 flex-grow flex flex-col items-center py-6 gap-6 rounded-b-xl border-x border-b border-amber-600/50 shadow-2xl">
+          <div className="bg-amber-600 py-2 rounded-t-xl text-center font-black text-[8px] text-black uppercase tracking-tighter">Система</div>
+          <div className="bg-amber-500 flex-grow flex flex-col items-center py-4 rounded-b-xl border-x border-b border-amber-600/50 shadow-2xl overflow-y-auto no-scrollbar">
             <button onClick={() => setIsCombatMode(!isCombatMode)} className={`w-12 h-12 md:w-16 md:h-16 rounded-xl flex items-center justify-center transition-all border-b-4 ${isCombatMode ? 'bg-red-700 border-red-950 translate-y-1' : 'bg-zinc-900 border-black hover:bg-zinc-800'}`}>
               <span className="text-white text-xl">⚔️</span>
             </button>
-            <button onClick={() => setShowCombatInfo(true)} className="w-10 h-10 bg-[#3d2314] rounded-full flex items-center justify-center text-amber-500 font-black italic shadow-lg hover:bg-black transition-colors">i</button>
+            <button onClick={() => setShowCombatInfo(true)} className="mt-2 w-8 h-8 bg-[#3d2314] rounded-full flex items-center justify-center text-amber-500 font-black italic text-xs shadow-lg hover:bg-black transition-colors border border-amber-900/20">i</button>
+            <div className="w-full border-t border-black/10 my-4"></div>
+            <DiceRoller />
           </div>
         </div>
 
@@ -92,15 +96,13 @@ export default function App() {
             <div className="bg-[#111] p-3 border border-amber-900/30 rounded-lg shadow-xl w-full max-w-[1200px] z-[150]">
               <div className="flex flex-wrap gap-2 items-center mb-2">
                 <input type="text" placeholder="Поиск чертежа..." className="bg-black border border-amber-700/50 p-2 rounded text-amber-100 flex-grow text-xs outline-none focus:border-amber-500 transition-colors" value={search} onChange={e => setSearch(e.target.value)} />
-                
                 <select className="bg-black border border-amber-700/50 p-2 rounded text-amber-100 text-[10px] font-bold uppercase outline-none cursor-pointer hover:border-amber-500" value={levelFilter} onChange={e => setLevelFilter(e.target.value)}>
                   <option value="all">Все уровни</option>
                   <option value="Заговор">Заговоры</option>
                   {[1, 2, 3, 4].map(l => <option key={l} value={String(l)}>{l} уровень</option>)}
                 </select>
-
                 <select className="bg-black border border-amber-700/50 p-2 rounded text-amber-100 text-[10px] font-bold uppercase outline-none cursor-pointer hover:border-amber-500" value={distFilter} onChange={e => setDistFilter(e.target.value)}>
-                  <option value="all">Дистанция: Все</option>
+                  <option value="all">Дальность: Все</option>
                   <option value="self">На себя</option>
                   <option value="touch">Касание</option>
                   <option value="30">До 30 фт</option>
@@ -108,7 +110,6 @@ export default function App() {
                   <option value="120">61-120 фт</option>
                   <option value="long">120+ фт</option>
                 </select>
-
                 <div className="flex bg-black border border-amber-900/50 rounded p-1 gap-1">
                   {['В', 'С', 'М'].map(c => (
                     <button key={c} onClick={() => setCompFilter(p => p.includes(c) ? p.filter(x => x !== c) : [...p, c])} className={`w-7 h-7 rounded text-[9px] font-black transition-all ${compFilter.includes(c) ? 'bg-amber-600 text-black shadow-inner' : 'text-amber-900 hover:text-amber-700'}`}>{c}</button>
@@ -117,7 +118,6 @@ export default function App() {
               </div>
               <div className="flex gap-2 items-center border-t border-amber-900/10 pt-2 relative">
                   <button onClick={() => setShowCategories(!showCategories)} className={`px-3 py-1.5 border rounded font-bold text-[9px] uppercase transition-all ${showCategories ? 'bg-amber-500 text-black' : 'border-amber-800/40 text-amber-500 hover:border-amber-500'}`}>Категории ▼</button>
-                  
                   <div className="ml-auto flex gap-1">
                     <button onClick={() => { if(compareMode && compareList.length >= 2) setShowCompareResults(true); setCompareMode(!compareMode); }} className={`px-4 py-1.5 rounded font-black border-2 text-[9px] transition-all ${compareMode ? 'bg-amber-500 text-black border-white shadow-lg' : 'bg-black text-amber-500 border-amber-900 hover:border-amber-500'}`}>
                       {compareMode ? `АНАЛИЗ (${compareList.length}/3)` : 'СРАВНИТЬ'}
@@ -126,7 +126,6 @@ export default function App() {
                       <button onClick={() => { setCompareMode(false); setCompareList([]); }} className="px-2 py-1.5 bg-red-950 text-red-500 rounded border-2 border-red-900 text-[9px] font-black hover:bg-red-800 transition-all">❌</button>
                     )}
                   </div>
-
                   {showCategories && (
                     <div className="absolute top-full left-0 mt-2 bg-[#efe7d6] text-black rounded-lg shadow-2xl z-[500] p-4 border-2 border-amber-700 w-[500px] grid grid-cols-3 gap-4 animate-in zoom-in-95 duration-200">
                         {Object.entries(categories).map(([cat, subs]) => (
@@ -156,12 +155,11 @@ export default function App() {
                     </div>
                   ))}
                 </main>
-
                 <aside className="w-full lg:w-[260px] sticky top-0 h-fit space-y-4">
                   <div className="bg-black border-2 border-amber-900/40 rounded-lg overflow-hidden shadow-2xl">
                     <img src={ikona} alt="Механик" className="w-full h-auto object-cover grayscale opacity-80" />
                     <div className="bg-amber-900/10 p-2 text-center border-t border-amber-900/20">
-                      <p className="text-[8px] text-amber-600 font-black uppercase tracking-widest italic">Personal Link Established</p>
+                      <p className="text-[8px] text-amber-600 font-black uppercase tracking-widest italic">Портрет паромеханика 1872г.</p>
                     </div>
                   </div>
                   <div className="bg-[#111] p-3 border border-amber-600/20 rounded-lg shadow-2xl">
