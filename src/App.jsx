@@ -15,47 +15,27 @@ export default function ParomechanicSpells() {
     "Помехи": ["Обездвиживание", "Оглушение", "Паралич"]
   };
 
-  // Функция для определения цветовой схемы на основе текста описания
+  // Автоматическая настройка цветов в зависимости от категории
   const getTheme = (description) => {
     if (description.includes("Атакующие")) return {
-      text: "text-red-500",
-      bg: "bg-red-950/20",
-      border: "border-red-900/30",
-      accent: "text-red-900",
-      modalBorder: "border-red-500",
-      header: "bg-red-600"
+      text: "text-red-500", bg: "bg-red-950/20", border: "border-red-900/30",
+      accent: "text-red-900", modalBorder: "border-red-500", header: "bg-red-600"
     };
     if (description.includes("Защитные")) return {
-      text: "text-blue-500",
-      bg: "bg-blue-950/20",
-      border: "border-blue-900/30",
-      accent: "text-blue-900",
-      modalBorder: "border-blue-500",
-      header: "bg-blue-600"
+      text: "text-blue-500", bg: "bg-blue-950/20", border: "border-blue-900/30",
+      accent: "text-blue-900", modalBorder: "border-blue-500", header: "bg-blue-600"
     };
     if (description.includes("Регенерирующие")) return {
-      text: "text-emerald-500",
-      bg: "bg-emerald-950/20",
-      border: "border-emerald-900/30",
-      accent: "text-emerald-900",
-      modalBorder: "border-emerald-500",
-      header: "bg-emerald-600"
+      text: "text-emerald-500", bg: "bg-emerald-950/20", border: "border-emerald-900/30",
+      accent: "text-emerald-900", modalBorder: "border-emerald-500", header: "bg-emerald-600"
     };
     if (description.includes("Помехи")) return {
-      text: "text-purple-500",
-      bg: "bg-purple-950/20",
-      border: "border-purple-900/30",
-      accent: "text-purple-900",
-      modalBorder: "border-purple-500",
-      header: "bg-purple-600"
+      text: "text-purple-500", bg: "bg-purple-950/20", border: "border-purple-900/30",
+      accent: "text-purple-900", modalBorder: "border-purple-500", header: "bg-purple-600"
     };
     return {
-      text: "text-amber-500",
-      bg: "bg-black/30",
-      border: "border-amber-900/20",
-      accent: "text-amber-700",
-      modalBorder: "border-amber-500",
-      header: "bg-amber-600"
+      text: "text-amber-500", bg: "bg-black/30", border: "border-amber-900/20",
+      accent: "text-amber-700", modalBorder: "border-amber-500", header: "bg-amber-600"
     };
   };
 
@@ -66,15 +46,18 @@ export default function ParomechanicSpells() {
         level: "Заговор",
         components: ["М"],
         description: `
-          <h3 class="text-amber-500 text-2xl font-black mb-2 uppercase italic tracking-tighter">Волшебная монетка</h3>
-          <p class="text-sm mb-1 text-amber-700 font-bold uppercase tracking-widest">Заговор | Школа Паромеханики</p>
-          <div class="grid grid-cols-2 gap-2 text-sm bg-black/30 p-3 rounded border border-amber-900/20 mb-4 font-sans">
-            <p><strong>Время:</strong> 1 доп. действие</p>
+          <h3 class="text-red-500 text-2xl font-black mb-2 uppercase italic tracking-tighter">Волшебная монетка</h3>
+          <p class="text-sm mb-1 text-red-900 font-bold uppercase tracking-widest">Заговор | Атакующие – Дальний</p>
+          <div class="grid grid-cols-2 gap-2 text-sm bg-red-950/20 p-3 rounded border border-red-900/30 mb-4 font-sans">
+            <p><strong>Время накладывания:</strong> 1 доп. действие</p>
             <p><strong>Дистанция:</strong> 5 футов</p>
-            <p><strong>Длительность:</strong> 1 секунда</p>
             <p><strong>Компоненты:</strong> М (золотая монета)</p>
+            <p><strong>Длительность:</strong> 1 секунда</p>
           </div>
-          <p class="mb-3 text-amber-100/90 leading-relaxed">Вы достаёте из кармана золотую монету и подбрасываете её. У вас есть 1 сек, чтобы ударить по ней атакующим заклинанием.</p>
+          <p class="mb-3 text-amber-100/90 leading-relaxed">Вы достаёте из кармана одну золотую монету, кладёте её на большой палец и подбрасываете вверх. У вас есть <strong>1 секунда</strong>, чтобы ударить по монете другим атакующим заклинанием.</p>
+          <div class="bg-red-900/10 border-l-4 border-red-600 p-3 italic text-amber-200/80">
+            При попадании совершите спасбросок Ловкости. При успехе монета наносит <strong>x2 отдельный урон</strong> по цели. Монету можно использовать 1 раз за бой.
+          </div>
         `
       },
       {
@@ -87,10 +70,10 @@ export default function ParomechanicSpells() {
           <div class="grid grid-cols-2 gap-2 text-sm bg-red-950/20 p-3 rounded border border-red-900/30 mb-4 font-sans">
             <p><strong>Время:</strong> 1 действие</p>
             <p><strong>Дистанция:</strong> 30 футов</p>
-            <p><strong>Длительность:</strong> Мгновенно</p>
             <p><strong>Компоненты:</strong> В, С</p>
+            <p><strong>Длительность:</strong> Мгновенно</p>
           </div>
-          <p class="text-amber-100/90 leading-relaxed">Цель получает 2d8 силового урона и должна пройти спасбросок Силы, иначе будет отброшена на 5 футов.</p>
+          <p class="text-amber-100/90 leading-relaxed">Вы формируете сгусток вращающегося пара и металла. При попадании цель получает 2d8 силового урона и должна пройти спасбросок Силы, иначе будет отброшена на 5 футов и сбита с ног.</p>
         `
       },
       {
@@ -103,10 +86,10 @@ export default function ParomechanicSpells() {
           <div class="grid grid-cols-2 gap-2 text-sm bg-purple-950/20 p-3 rounded border border-purple-900/30 mb-4 font-sans">
             <p><strong>Время:</strong> 1 действие</p>
             <p><strong>Дистанция:</strong> 20 футов</p>
-            <p><strong>Длительность:</strong> 1 раунд</p>
             <p><strong>Компоненты:</strong> В, С</p>
+            <p><strong>Длительность:</strong> 1 раунд</p>
           </div>
-          <p class="text-amber-100/90 leading-relaxed italic">При провале спасброска Телосложения цель становится <strong>обездвиженной</strong>.</p>
+          <p class="text-amber-100/90 leading-relaxed italic">Вы создаете зону мгновенного разрежения воздуха. Существо в этой зоне должно совершить спасбросок Телосложения. При провале оно становится <strong>обездвиженным</strong>, так как его легкие и суставы сковывает перепад давления.</p>
         `
       },
       {
@@ -119,10 +102,10 @@ export default function ParomechanicSpells() {
           <div class="grid grid-cols-2 gap-2 text-sm bg-blue-950/20 p-3 rounded border border-blue-900/30 mb-4 font-sans">
             <p><strong>Время:</strong> 1 действие</p>
             <p><strong>Дистанция:</strong> на себя</p>
-            <p><strong>Длительность:</strong> 10 мин (конц.)</p>
-            <p><strong>Компоненты:</strong> В, С, М (латунь)</p>
+            <p><strong>Длительность:</strong> 10 минут (концентрация)</p>
+            <p><strong>Компоненты:</strong> В, С, М (латунная пластина)</p>
           </div>
-          <p class="text-amber-100/90 leading-relaxed">Вы получаете +3 к КД. При попадании по вам щит наносит 1d6 огненного урона паром.</p>
+          <p class="text-amber-100/90 leading-relaxed font-serif">Микродвигатели на вашем доспехе или одежде активируются, создавая защитную вибрацию. Вы получаете +3 к КД. Если существо попадает по вам атакой ближнего боя, щит выбрасывает струю пара, наносящую 1d6 огненного урона.</p>
         `
       },
       {
@@ -136,9 +119,9 @@ export default function ParomechanicSpells() {
             <p><strong>Время:</strong> 1 бонусное действие</p>
             <p><strong>Дистанция:</strong> касание</p>
             <p><strong>Длительность:</strong> 3 раунда</p>
-            <p><strong>Компоненты:</strong> М (ампула)</p>
+            <p><strong>Компоненты:</strong> М (ампула с эфиром)</p>
           </div>
-          <p class="text-amber-100/90 leading-relaxed font-serif">Цель восстанавливает 2d6 хитов в начале каждого хода и получает преимущество на спасброски от яда.</p>
+          <p class="text-amber-100/90 leading-relaxed font-serif">Вы вводите концентрированный эфир в механизмы или тело. В начале каждого вашего хода цель восстанавливает 2d6 хитов. Кроме того, цель получает преимущество на спасброски от истощения и отравления на время действия заклинания.</p>
         `
       },
       {
@@ -150,11 +133,11 @@ export default function ParomechanicSpells() {
           <p class="text-sm mb-1 text-purple-900 font-bold uppercase font-sans tracking-widest">Заговор | Помехи – Оглушение</p>
           <div class="grid grid-cols-2 gap-2 text-sm bg-purple-950/20 p-3 rounded border border-purple-900/30 mb-4 font-sans">
             <p><strong>Время:</strong> 1 действие</p>
-            <p><strong>Дистанция:</strong> 10 футов</p>
+            <p><strong>Дистанция:</strong> 10 футов (радиус)</p>
             <p><strong>Длительность:</strong> Мгновенно</p>
             <p><strong>Компоненты:</strong> В</p>
           </div>
-          <p class="text-amber-100/90 leading-relaxed font-serif">Существа в радиусе должны пройти спасбросок Ловкости или стать ослепленными.</p>
+          <p class="text-amber-100/90 leading-relaxed font-serif">Вы резко стравливаете давление из основного котла. Ослепляющее и шумное облако пара вырывается вокруг вас. Все существа в радиусе 10 футов должны пройти спасбросок Ловкости или стать <strong>ослепленными</strong> до начала вашего следующего хода.</p>
         `
       }
     ]
