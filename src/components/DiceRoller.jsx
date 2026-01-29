@@ -43,7 +43,7 @@ export default function DiceRoller({ setShowDiceInfo }) {
     { sides: 12, clip: "polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%)" },
     { sides: 10, clip: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)" },
     { sides: 8, clip: "polygon(50% 0%, 90% 50%, 50% 100%, 10% 50%)" },
-    { sides: 6, clip: "inset(0% round 15%)" },
+    { sides: 6, clip: "inset(0%)" },
     { sides: 4, clip: "polygon(50% 0%, 100% 100%, 0% 100%)" },
   ];
 

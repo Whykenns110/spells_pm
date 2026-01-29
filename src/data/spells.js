@@ -80,7 +80,7 @@ export const spellsData = {
         </div>
         <p class="mb-3 text-amber-100/90 leading-relaxed font-serif">Вы активируете скрытые механизмы на доспехах, прижимая латунную пластину к груди. С резким шипением вокруг вас раскрываются прозрачные энергетические верньеры, вибрирующие в такт вашему пульсу.</p>
         <div class="bg-blue-900/10 border-l-4 border-blue-600 p-3 italic text-amber-200/80 text-xs">
-          Вы получаете <strong>+3 к КД</strong>. Любое существо, попавшее по вам атакой ближнего боя, получает <strong>1d6 огненного урона</strong> от встречного выброса раскаленного пара. Длительность: 10 минут (концентрация).
+          Вы получаете <strong>+3 к КД</strong>. Любое существо, попавшее по вам атакой ближнего боя, получает <strong>1d6 огненного урона</strong> от встречного выброса раскаленного пара. Длительность: 2 хода.
         </div>
       `
     },
@@ -149,14 +149,14 @@ export const spellsData = {
       description: `
         <h3 class="text-amber-500 text-2xl font-black mb-2 uppercase italic tracking-tighter">Кристальный глаз</h3>
         <p class="text-sm mb-1 text-purple-900 font-bold uppercase tracking-widest">Заговор | Помехи – Оглушение</p>
-        <div class="grid grid-cols-2 gap-2 text-sm bg-amber-950/20 p-3 rounded border border-amber-900/30 mb-4 font-sans">
+        <div class="grid grid-cols-2 gap-2 text-sm bg-purple-950/20 p-3 rounded border border-purple-900/30 mb-4 font-sans">
           <p><strong>Время:</strong> 1 действие</p>
           <p><strong>Дистанция:</strong> Касание</p>
           <p><strong>Компоненты:</strong> В, М (хрустальный осколок)</p>
           <p><strong>Длительность:</strong> 5 минут</p>
         </div>
         <p class="mb-3 text-amber-100/90 leading-relaxed font-sans">Вы подносите острый осколок хрусталя к открытому глазу. С тихим щелчком кристалл сливается с вашей глазницей, превращаясь в сияющий аметистовый окуляр. Ваше зрение пронзает материю, открывая структуру молекул и скрытое за стенами.</p>
-        <div class="bg-amber-900/10 border-l-4 border-amber-600 p-3 italic text-amber-200/80 text-xs">
+        <div class="bg-purple-900/10 border-l-4 border-purple-600 p-3 italic text-amber-200/80 text-xs">
           При активации наносит <strong>1к4 (-мод Телосложения)</strong> урона. Дает обзор сквозь стены и регулируемый зум. Любая атака, попавшая точно в глаз, отражается в отправителя. Наносит <strong>1 ед. урона</strong> каждую минуту. Команда "Реверто" досрочно завершает эффект, но хрусталь при этом уничтожается.
         </div>
       `

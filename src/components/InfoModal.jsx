@@ -44,14 +44,14 @@ export default function InfoModal({ isOpen, onClose }) {
           {/* LORE */}
           <section id="info-lore" className="space-y-4 border-l-2 border-amber-600/50 pl-6">
             <h2 className="text-2xl font-black uppercase italic text-amber-500">📜 История класса</h2>
-            <p className="leading-relaxed text-amber-100/70">Паромеханики — Одни из величайших мастеров во всем мире, their изобретения созданные исключительно из магии могут работать веками. Пропуская магию через воздух, она меняет его структуру на атомном уровне. Их изобретения могут работать как автономно, так и дистанционно с помощью особых перчаток</p>
+            <p className="leading-relaxed text-amber-100/70">Паромеханики — Одни из величайших мастеров во всем мире, их изобретения созданные исключительно из магии могут работать веками. Пропуская магию через воздух, она меняет его структуру на атомном уровне. Их изобретения могут работать как автономно, так и дистанционно с помощью особых перчаток</p>
             <div className="grid md:grid-cols-2 gap-4 mt-6">
               <div className="bg-emerald-900/20 p-3 rounded-xl border border-emerald-500/30">
-                <span className="block font-black text-[10px] text-emerald-500 uppercase">Рекомендация:</span>
+                <span className="block font-black text-[16px] text-emerald-500 uppercase">Рекомендация:</span>
                 <p className="text-sm font-bold">Интеллект ≥ 14, Ловкость ≥ 13.</p>
               </div>
               <div className="bg-red-900/20 p-3 rounded-xl border border-red-500/30">
-                <span className="block font-black text-[10px] text-red-500 uppercase">Ограничение:</span>
+                <span className="block font-black text-[16px] text-red-500 uppercase">Ограничение:</span>
                 <p className="text-sm font-bold">Предыстория не может быть "Отшельник".</p>
               </div>
             </div>
@@ -63,24 +63,24 @@ export default function InfoModal({ isOpen, onClose }) {
             <div className="grid md:grid-cols-2 gap-8">
               <div className="bg-zinc-900/50 p-4 rounded-2xl border border-white/5">
                 <h3 className="font-black text-amber-600 text-sm uppercase mb-2">Хиты</h3>
-                <p className="text-sm italic">• 1к8 за уровень</p>
-                <p className="text-sm italic">• На 1 уровне: 8 + мод. Телосложения</p>
+                <p className="text-sm">• 1к8 за уровень</p>
+                <p className="text-sm">• На 1 уровне: 8 + мод. Телосложения</p>
               </div>
               <div className="bg-zinc-900/50 p-4 rounded-2xl border border-white/5">
                 <h3 className="font-black text-amber-600 text-sm uppercase mb-2">Владение</h3>
-                <p className="text-sm italic">• Доспехи: Только кожаный</p>
-                <p className="text-sm italic">• Спасброски: ИНТ, ЛОВ</p>
+                <p className="text-sm">• Доспехи: Кожаный доспех</p>
+                <p className="text-sm">• Спасброски: ИНТ, ЛОВ</p>
               </div>
             </div>
           </section>
 
           {/* EQUIP - ИСПРАВЛЕНО: добавлен section id для работы навигации */}
           <section id="info-equip" className="bg-amber-950/40 p-3 rounded-lg border border-amber-800/50 mt-4">
-            <h3 className="text-[10px] font-black uppercase text-amber-500 mb-1 flex items-center gap-2">
+            <h3 className="text-[20px] font-black uppercase text-amber-500 mb-1 flex items-center gap-2">
               🎒 Снаряжение
             </h3>
             <p className="text-xs text-amber-100/90 leading-relaxed">
-              Простое оружие, Кожаный доспех, Инструменты, Легкий Арбалет, <span className="text-amber-400 font-bold">14 зм</span>
+               <span className="text-amber-400 font-bold">Простое оружие, Кожаный доспех, Инструменты, Легкий Арбалет, 14 зм</span>
             </p>
           </section>
 

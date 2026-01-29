@@ -70,7 +70,7 @@ export default function App() {
       <header className="p-6 pb-2 w-full flex-shrink-0 z-10">
         <div className="max-w-[1400px] mx-auto border-b border-amber-900/20 pb-2">
           <h1 className="text-3xl md:text-5xl font-black text-amber-500 uppercase italic tracking-tighter">АРХИВ ПАРОМЕХАНИКА</h1>
-          <p className="text-amber-700 text-[10px] uppercase tracking-[0.3em] font-sans font-bold italic mt-1">ПОРТРЕТ ПАРОМЕХАНИКА! v.0.9.1 • Вайбкодинг: Whykenns</p>
+          <p className="text-amber-700 text-[10px] uppercase tracking-[0.3em] font-sans font-bold italic mt-1">БАГИ СДОХЛИ! v.0.9.1.1 • Тупой-Вайбкодер: Whykenns</p>
         </div>
       </header>
 
@@ -157,10 +157,10 @@ export default function App() {
       {/* Добавлено окно для кубиков */}
       {showDiceInfo && (
         <div className="fixed inset-0 z-[10000] flex items-center justify-center bg-black/90 p-4" onClick={() => setShowDiceInfo(false)}>
-           <div className="bg-zinc-900 border-2 border-amber-600 p-6 rounded-2xl max-w-lg" onClick={e => e.stopPropagation()}>
-              <h2 className="text-amber-500 font-black text-2xl mb-4 uppercase">Система рандома</h2>
-              <p className="text-amber-100 text-sm italic leading-relaxed">Используйте модули костей для расчёта вероятностей и повреждений механизмов.</p>
-              <button onClick={() => setShowDiceInfo(false)} className="mt-6 w-full py-2 bg-amber-600 text-black font-black rounded uppercase">Принято</button>
+           <div className="bg-zinc-900 border-2 border-red-600 p-6 rounded-2xl max-w-lg" onClick={e => e.stopPropagation()}>
+              <h2 className="text-red-500 font-black text-2xl mb-4 uppercase">Система рандома</h2>
+              <p className="text-red-100 text-sm italic leading-relaxed">Используйте модули костей ниже для расчёта вероятностей и повреждений механизмов. Сброс числа по красной кнопке при наведении на кость.</p>
+              <button onClick={() => setShowDiceInfo(false)} className="mt-6 w-full py-2 bg-red-600 text-white font-black rounded uppercase">Принято</button>
            </div>
         </div>
       )}

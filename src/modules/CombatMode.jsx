@@ -85,10 +85,10 @@ export default function CombatMode({
         </div>
       ) : (
         <div className="text-center py-32 border-2 border-dashed border-red-900/20 rounded-3xl bg-red-950/5">
-          <div className="text-6xl mb-4 opacity-20">⚠️</div>
+          <div className="text-6xl mb-4 opacity-40">⚠️</div>
           <p className="text-red-900 uppercase font-black text-xl italic">Боевая память пуста</p>
-          <p className="text-red-950/60 text-sm mt-2 max-w-xs mx-auto font-sans">
-            Перейдите в архив и отметьте модули символом ★ для активации протокола
+          <p className="text-red-900 text-sm mt-2 max-w-xs mx-auto font-sans">
+            Перейдите в архив и отметьте нужные модули символом ★ для активации протокола
           </p>
         </div>
       )}
