@@ -8,7 +8,6 @@ const Die = ({ sides, clip, isRound }) => {
     setIsRolling(true);
     const val = Math.floor(Math.random() * sides) + 1;
     setResult(val);
-    // Эффект вспышки на 200мс
     setTimeout(() => setIsRolling(false), 200);
   };
 
@@ -36,12 +35,13 @@ const Die = ({ sides, clip, isRound }) => {
   );
 };
 
-export default function DiceRoller({ setShowInfo }) {
+// ИСПРАВЛЕНО: Аргумент изменен на setShowDiceInfo, чтобы совпадать с App.jsx
+export default function DiceRoller({ setShowDiceInfo }) {
   const diceConfig = [
     { sides: 100, isRound: true },
     { sides: 20, clip: "polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)" },
     { sides: 12, clip: "polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%)" },
-    { sides: 10, clip: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)" }, // d10 теперь ромб/алмаз
+    { sides: 10, clip: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)" },
     { sides: 8, clip: "polygon(50% 0%, 90% 50%, 50% 100%, 10% 50%)" },
     { sides: 6, clip: "inset(0% round 15%)" },
     { sides: 4, clip: "polygon(50% 0%, 100% 100%, 0% 100%)" },
@@ -50,7 +50,7 @@ export default function DiceRoller({ setShowInfo }) {
   return (
     <div className="flex flex-col items-center gap-5 mt-2">
       <button 
-        onClick={() => setShowInfo(true)}
+        onClick={() => setShowDiceInfo(true)} // ИСПРАВЛЕНО: вызываем верную функцию
         className="w-8 h-8 bg-[#3d2314] rounded-full flex items-center justify-center text-amber-500 font-black italic text-xs shadow-lg hover:bg-black transition-colors border border-amber-900/20"
       >
         ?

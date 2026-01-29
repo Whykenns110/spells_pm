@@ -11,7 +11,10 @@ export default function SpellModal({ spell, onClose, onCopy, theme, isCompare = 
       <div className={`${theme.header} p-4 flex justify-between items-center text-black font-black uppercase italic shadow-md`}>
         <span className="text-xs tracking-widest">{isCompare ? spell.name : 'Спецификация чертежа'}</span>
         <div className="flex gap-4 items-center">
-          <button onClick={() => onCopy(spell)} className="text-[10px] bg-black/20 px-3 py-1.5 rounded hover:bg-black/40 uppercase font-bold transition-colors">Копировать</button>
+          {/* Добавлена проверка на наличие функции onCopy */}
+          {onCopy && (
+            <button onClick={() => onCopy(spell)} className="text-[10px] bg-black/20 px-3 py-1.5 rounded hover:bg-black/40 uppercase font-bold transition-colors">Копировать</button>
+          )}
           <button onClick={onClose} className="text-3xl leading-none hover:scale-110 transition-transform">&times;</button>
         </div>
       </div>

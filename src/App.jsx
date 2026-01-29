@@ -7,7 +7,7 @@ import CombatMode from "./modules/CombatMode";
 import DiceRoller from "./components/DiceRoller";
 import ikona from "./ikona.jpg";
 import InfoModal from "./components/InfoModal";
-import FilterPanel from "./components/FilterPanel"; // Твой новый файл
+import FilterPanel from "./components/FilterPanel"; 
 
 export default function App() {
   const [search, setSearch] = useState("");
@@ -45,11 +45,12 @@ export default function App() {
         
         let matchesDist = true;
         if (distFilter !== "all") {
-          const rangeStr = (s.range || "").toLowerCase();
+          const rangeStr = (s.distance || s.range || "").toLowerCase();
           const match = rangeStr.match(/\d+/); 
           const num = match ? parseInt(match[0]) : 0;
-          if (distFilter === "self") matchesDist = rangeStr.includes("на себя");
-          else if (distFilter === "touch") matchesDist = rangeStr.includes("касание");
+          
+          if (distFilter === "self") matchesDist = rangeStr.includes("на себя") || rangeStr.includes("self");
+          else if (distFilter === "touch") matchesDist = rangeStr.includes("касание") || rangeStr.includes("touch");
           else if (distFilter === "30") matchesDist = num > 0 && num <= 30;
           else if (distFilter === "60") matchesDist = num > 30 && num <= 60;
           else if (distFilter === "120") matchesDist = num > 60 && num <= 120;
@@ -69,26 +70,25 @@ export default function App() {
       <header className="p-6 pb-2 w-full flex-shrink-0 z-10">
         <div className="max-w-[1400px] mx-auto border-b border-amber-900/20 pb-2">
           <h1 className="text-3xl md:text-5xl font-black text-amber-500 uppercase italic tracking-tighter">АРХИВ ПАРОМЕХАНИКА</h1>
-          <p className="text-amber-700 text-[10px] uppercase tracking-[0.3em] font-sans font-bold italic mt-1">Modular Engine v.0.8.9 • Вайбкодинг: Whykenns</p>
+          <p className="text-amber-700 text-[10px] uppercase tracking-[0.3em] font-sans font-bold italic mt-1">Modular Engine v.0.8.10 • Вайбкодинг: Whykenns</p>
         </div>
       </header>
 
       <div className="flex gap-4 px-4 md:px-10 pb-4 max-w-[1600px] mx-auto w-full flex-grow overflow-hidden relative">
-        {/* Sidebar */}
         <div className="w-20 md:w-28 flex-shrink-0 flex flex-col h-full z-10">
-          <div className="bg-amber-600 py-2 rounded-t-xl text-center font-black text-[8px] text-black uppercase tracking-tighter">Система</div>
+          <div className="bg-amber-600 py-2 rounded-t-xl text-center font-black text-[14px] text-black uppercase tracking-tighter">Система</div>
           <div className="bg-amber-500 flex-grow flex flex-col items-center py-4 rounded-b-xl border-x border-b border-amber-600/50 shadow-2xl overflow-y-auto no-scrollbar">
             <button onClick={() => setIsCombatMode(!isCombatMode)} className={`w-12 h-12 md:w-16 md:h-16 rounded-xl flex items-center justify-center transition-all border-b-4 ${isCombatMode ? 'bg-red-700 border-red-950 translate-y-1' : 'bg-zinc-900 border-black hover:bg-zinc-800'}`}>
               <span className="text-white text-xl">⚔️</span>
             </button>
             <button onClick={() => setShowCombatInfo(true)} className="mt-2 w-8 h-8 bg-[#3d2314] rounded-full flex items-center justify-center text-amber-500 font-black italic border border-amber-900/20">i</button>
             <div className="w-full border-t border-black/10 my-4" />
-            <DiceRoller setShowInfo={setShowDiceInfo} />
+            {/* Синхронизировал имя пропса с DiceRoller.jsx */}
+            <DiceRoller setShowDiceInfo={setShowDiceInfo} />
           </div>
         </div>
 
         <div className="flex-grow flex flex-col gap-4 min-w-0 h-full overflow-hidden">
-          {/* Твой новый компонент FilterPanel заменяет весь старый JSX блок здесь */}
           {!isCombatMode && (
             <FilterPanel 
               search={search} setSearch={setSearch}
@@ -141,21 +141,59 @@ export default function App() {
         </div>
       </div>
 
+      {/* --- МОДАЛЬНЫЕ ОКНА --- */}
       <InfoModal isOpen={showInfoModal} onClose={() => setShowInfoModal(false)} />
-      {activeSpell && <div className="fixed inset-0 z-[500] flex items-center justify-center p-4 bg-black/95 backdrop-blur-sm" onClick={() => setActiveSpell(null)}>
-        <div className="max-w-2xl w-full" onClick={e => e.stopPropagation()}>
-          <SpellModal spell={activeSpell} theme={getSpellTheme(activeSpell)} onClose={() => setActiveSpell(null)} />
+      
+      {showCombatInfo && (
+        <div className="fixed inset-0 z-[10000] flex items-center justify-center bg-black/90 p-4" onClick={() => setShowCombatInfo(false)}>
+           <div className="bg-zinc-900 border-2 border-red-600 p-6 rounded-2xl max-w-lg" onClick={e => e.stopPropagation()}>
+              <h2 className="text-red-500 font-black text-2xl mb-4">ИНФО БИТВЫ</h2>
+              <p className="text-amber-100 text-sm italic leading-relaxed">Здесь находятся протоколы ведения боя. Следите за дебаффами и состоянием безумия при использовании систем.</p>
+              <button onClick={() => setShowCombatInfo(false)} className="mt-6 w-full py-2 bg-red-600 text-white font-black rounded uppercase">Понял</button>
+           </div>
         </div>
-      </div>}
-      {showCompareResults && <div className="fixed inset-0 z-[700] bg-black/80 backdrop-blur-xl p-6 overflow-y-auto flex flex-col items-center">
-        <div className="w-full max-w-6xl flex justify-between mb-8 border-b border-amber-900/30 pb-4 items-center">
-          <h2 className="text-2xl font-black text-amber-500 uppercase italic">Анализ систем</h2>
-          <button onClick={() => {setShowCompareResults(false); setCompareList([]); setCompareMode(false);}} className="px-6 py-2 bg-amber-600 text-black font-black rounded text-xs uppercase">Закрыть</button>
+      )}
+
+      {/* Добавлено окно для кубиков */}
+      {showDiceInfo && (
+        <div className="fixed inset-0 z-[10000] flex items-center justify-center bg-black/90 p-4" onClick={() => setShowDiceInfo(false)}>
+           <div className="bg-zinc-900 border-2 border-amber-600 p-6 rounded-2xl max-w-lg" onClick={e => e.stopPropagation()}>
+              <h2 className="text-amber-500 font-black text-2xl mb-4 uppercase">Система рандома</h2>
+              <p className="text-amber-100 text-sm italic leading-relaxed">Используйте модули костей для расчёта вероятностей и повреждений механизмов.</p>
+              <button onClick={() => setShowDiceInfo(false)} className="mt-6 w-full py-2 bg-amber-600 text-black font-black rounded uppercase">Принято</button>
+           </div>
         </div>
-        <div className="flex flex-wrap justify-center gap-6 w-full">
-          {compareList.map(s => <div key={s.name} className="w-full max-w-[400px]"><SpellModal spell={s} theme={getSpellTheme(s)} isCompare={true} onClose={() => {}} /></div>)}
+      )}
+
+      {activeSpell && (
+        <div className="fixed inset-0 z-[500] flex items-center justify-center p-4 bg-black/95 backdrop-blur-sm" onClick={() => setActiveSpell(null)}>
+          <div className="max-w-2xl w-full" onClick={e => e.stopPropagation()}>
+            <SpellModal spell={activeSpell} theme={getSpellTheme(activeSpell)} onClose={() => setActiveSpell(null)} />
+          </div>
         </div>
-      </div>}
+      )}
+
+      {showCompareResults && (
+        <div className="fixed inset-0 z-[700] bg-black/80 backdrop-blur-xl p-6 overflow-y-auto flex flex-col items-center">
+          <div className="w-full max-w-6xl flex justify-between mb-8 border-b border-amber-900/30 pb-4 items-center">
+            <h2 className="text-2xl font-black text-amber-500 uppercase italic">Анализ систем</h2>
+            <button onClick={() => {setShowCompareResults(false); setCompareList([]); setCompareMode(false);}} className="px-6 py-2 bg-amber-600 text-black font-black rounded text-xs uppercase">Закрыть</button>
+          </div>
+          <div className="flex flex-wrap justify-center gap-6 w-full">
+            {compareList.map(s => (
+              <div key={s.name} className="w-full max-w-[400px]">
+                {/* ИСПРАВЛЕНО: Теперь onClose реально удаляет карточку из списка сравнения */}
+                <SpellModal 
+                  spell={s} 
+                  theme={getSpellTheme(s)} 
+                  isCompare={true} 
+                  onClose={() => setCompareList(prev => prev.filter(item => item.name !== s.name))} 
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
