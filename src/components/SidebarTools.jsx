@@ -37,7 +37,7 @@ export default function SidebarTools({ type }) {
       <button onClick={toggle} className={buttonStyles[type]}>{labels[type]}</button>
 
       {isOpen && (
-        <div className="fixed inset-0 z-[900] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm" onClick={toggle}>
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md" onClick={toggle}>
           <div className="bg-[#efe7d6] border-4 border-[#3d2314] rounded-2xl w-full max-w-sm overflow-hidden shadow-2xl flex flex-col" onClick={e => e.stopPropagation()}>
             
             <div className="bg-[#3d2314] p-3 flex justify-between items-center">
