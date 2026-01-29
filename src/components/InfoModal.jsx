@@ -104,9 +104,11 @@ export default function InfoModal({ isOpen, onClose }) {
                   <span className="text-red-600">Снятие: Покой или спец. зелье</span>
                 </div>
               </div>
-              <div className="border-l-2 border-red-900/30 pl-4">
-                <h4 className="font-black uppercase text-red-400">Чувство неполноценности</h4>
-                <p className="text-xs italic text-red-200/50">Слабая атака (≤4) снижает макс. ХП до конца боя. 1ур:-1ХП | 5ур:-3ХП | 11ур:-7ХП | 20ур:-16ХП</p>
+              <div className="bg-red-900/20 p-4 rounded-xl border border-red-500/30">
+                <h4 className="font-black uppercase text-red-500 flex items-center gap-2">😭 Чувство неполноценности</h4>
+                <p className="text-sm text-red-100/80 mt-2 leading-relaxed">
+                  Слабая атака (≤4) снижает макс. ХП до конца боя. <span className="text-red-400 font-bold underline">1ур:-1ХП | 5ур:-3ХП | 11ур:-7ХП | 20ур:-16ХП</span>.
+                </p>
               </div>
             </div>
           </section>
