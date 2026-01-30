@@ -13,7 +13,7 @@ const Die = ({ sides, clip, isRound }) => {
     
     setTimeout(() => {
       setResult(val);
-      setIsRolling(false);
+      setIsRolling(false); // Останавливаем "золотую" фазу
       
       if (val === 1) {
         setStatus('fail');
@@ -27,20 +27,23 @@ const Die = ({ sides, clip, isRound }) => {
     }, 200);
   };
 
+  // Выбираем цвет для фазы броска и фазы результата
+  let colorClasses = 'bg-zinc-900 text-amber-50 border-white/10 hover:bg-zinc-800 hover:border-white/30';
+  
+  if (isRolling) {
+    // Цвет ПРИ НАЖАТИИ (нейтрально-янтарный, а не красный)
+    colorClasses = 'bg-amber-600 text-black border-amber-400 shadow-[0_0_15px_rgba(245,158,11,0.5)]';
+  } else if (status === 'fail') {
+    colorClasses = 'bg-red-600 text-white border-red-400';
+  } else if (status === 'success') {
+    colorClasses = 'bg-emerald-600 text-white border-emerald-400';
+  }
+
   return (
     <div className="relative flex items-center group">
       <button
         onClick={roll}
-        className={`w-12 h-12 md:w-14 md:h-14 flex items-center justify-center text-[11px] md:text-[13px] font-black border transition-all active:scale-95 shadow-xl
-          ${isRound ? 'rounded-full' : ''} 
-          ${isRolling 
-            ? 'bg-red-700 text-white border-red-500 animate-pulse' 
-            : status === 'fail' 
-              ? 'bg-red-600 text-white border-red-400' 
-              : status === 'success' 
-                ? 'bg-emerald-600 text-white border-emerald-400' 
-                : 'bg-zinc-900 text-amber-50 border-white/10 hover:bg-zinc-800 hover:border-white/30' 
-          }`}
+        className={`w-12 h-12 md:w-14 md:h-14 flex items-center justify-center text-[11px] md:text-[13px] font-black border transition-all active:scale-95 shadow-xl ${isRound ? 'rounded-full' : ''} ${colorClasses}`}
         style={{ clipPath: clip }}
       >
         {result}
