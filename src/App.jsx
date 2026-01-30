@@ -25,6 +25,19 @@ export default function App() {
   const [compareList, setCompareList] = useState([]);
   const [showCompareResults, setShowCompareResults] = useState(false);
 
+  // --- НОВАЯ СТРОЧКА ДЛЯ АНИМАЦИИ ---
+  const [isClosing, setIsClosing] = useState(false);
+
+  // --- НОВАЯ ФУНКЦИЯ ЗАКРЫТИЯ (ЕДИНАЯ ДЛЯ ВСЕХ) ---
+  const closeWithAnim = (setter) => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setter(false);
+      if (setter === setActiveSpell) setter(null);
+      setIsClosing(false);
+    }, 250);
+  };
+
   const [favorites, setFavorites] = useState(() => {
     const saved = localStorage.getItem("paromechanic_favs");
     return saved ? JSON.parse(saved) : [];
@@ -70,7 +83,7 @@ export default function App() {
       <header className="p-6 pb-2 w-full flex-shrink-0 z-10">
         <div className="max-w-[1400px] mx-auto border-b border-amber-900/20 pb-2">
           <h1 className="text-3xl md:text-5xl font-black text-amber-500 uppercase italic tracking-tighter">АРХИВ ПАРОМЕХАНИКА</h1>
-          <p className="text-amber-700 text-[10px] uppercase tracking-[0.3em] font-sans font-bold italic mt-1">Онямашки! v.0.9.2.0 • Тупой-Вайбкодер: Whykenns</p>
+          <p className="text-amber-700 text-[10px] uppercase tracking-[0.3em] font-sans font-bold italic mt-1">Онямашки2.0! v.0.9.3.1 • Тупой-Вайбкодер: Whykenns</p>
         </div>
       </header>
 
@@ -141,43 +154,43 @@ export default function App() {
       </div>
 
       {/* --- МОДАЛЬНЫЕ ОКНА С АНИМАЦИЕЙ --- */}
-      <InfoModal isOpen={showInfoModal} onClose={() => setShowInfoModal(false)} />
+      <InfoModal isOpen={showInfoModal} isClosing={isClosing} onClose={() => closeWithAnim(setShowInfoModal)} />
       
       {showCombatInfo && (
-        <div className="fixed inset-0 z-[10000] flex items-center justify-center bg-black/90 p-4" onClick={() => setShowCombatInfo(false)}>
-           <div className="bg-zinc-900 border-2 border-red-600 p-6 rounded-2xl max-w-lg modal-animate" onClick={e => e.stopPropagation()}>
+        <div className={`fixed inset-0 z-[10000] flex items-center justify-center bg-black/90 p-4 transition-opacity duration-300 ${isClosing ? 'opacity-0' : 'opacity-100'}`} onClick={() => closeWithAnim(setShowCombatInfo)}>
+           <div className={`bg-zinc-900 border-2 border-red-600 p-6 rounded-2xl max-w-lg modal-animate ${isClosing ? 'modal-exit' : ''}`} onClick={e => e.stopPropagation()}>
               <h2 className="text-red-500 font-black text-2xl mb-4">ИНФО БИТВЫ</h2>
               <p className="text-amber-100 text-sm italic leading-relaxed">Здесь находятся протоколы ведения боя. Следите за дебаффами и состоянием безумия при использовании систем.</p>
-              <button onClick={() => setShowCombatInfo(false)} className="mt-6 w-full py-2 bg-red-600 text-white font-black rounded uppercase">Понял</button>
+              <button onClick={() => closeWithAnim(setShowCombatInfo)} className="mt-6 w-full py-2 bg-red-600 text-white font-black rounded uppercase">Понял</button>
            </div>
         </div>
       )}
 
       {showDiceInfo && (
-        <div className="fixed inset-0 z-[10000] flex items-center justify-center bg-black/90 p-4" onClick={() => setShowDiceInfo(false)}>
-           <div className="bg-zinc-900 border-2 border-red-600 p-6 rounded-2xl max-w-lg modal-animate" onClick={e => e.stopPropagation()}>
+        <div className={`fixed inset-0 z-[10000] flex items-center justify-center bg-black/90 p-4 transition-opacity duration-300 ${isClosing ? 'opacity-0' : 'opacity-100'}`} onClick={() => closeWithAnim(setShowDiceInfo)}>
+           <div className={`bg-zinc-900 border-2 border-red-600 p-6 rounded-2xl max-w-lg modal-animate ${isClosing ? 'modal-exit' : ''}`} onClick={e => e.stopPropagation()}>
               <h2 className="text-red-500 font-black text-2xl mb-4 uppercase">Система рандома</h2>
               <p className="text-red-100 text-sm italic leading-relaxed">Используйте модули костей ниже для расчёта вероятностей и повреждений механизмов. Сброс числа по красной кнопке при наведении на кость.</p>
-              <button onClick={() => setShowDiceInfo(false)} className="mt-6 w-full py-2 bg-red-600 text-white font-black rounded uppercase">Принято</button>
+              <button onClick={() => closeWithAnim(setShowDiceInfo)} className="mt-6 w-full py-2 bg-red-600 text-white font-black rounded uppercase">Принято</button>
            </div>
         </div>
       )}
 
       {activeSpell && (
-        <div className="fixed inset-0 z-[500] flex items-center justify-center p-4 bg-black/95 backdrop-blur-sm" onClick={() => setActiveSpell(null)}>
-          <div className="max-w-2xl w-full modal-animate" onClick={e => e.stopPropagation()}>
-            <SpellModal spell={activeSpell} theme={getSpellTheme(activeSpell)} onClose={() => setActiveSpell(null)} />
+        <div className={`fixed inset-0 z-[500] flex items-center justify-center p-4 bg-black/95 backdrop-blur-sm transition-opacity duration-300 ${isClosing ? 'opacity-0' : 'opacity-100'}`} onClick={() => closeWithAnim(setActiveSpell)}>
+          <div className={`max-w-2xl w-full modal-animate ${isClosing ? 'modal-exit' : ''}`} onClick={e => e.stopPropagation()}>
+            <SpellModal spell={activeSpell} theme={getSpellTheme(activeSpell)} onClose={() => closeWithAnim(setActiveSpell)} />
           </div>
         </div>
       )}
 
       {showCompareResults && (
-        <div className="fixed inset-0 z-[700] bg-black/80 backdrop-blur-xl p-6 overflow-y-auto flex flex-col items-center">
+        <div className={`fixed inset-0 z-[700] bg-black/80 backdrop-blur-xl p-6 overflow-y-auto flex flex-col items-center transition-opacity duration-300 ${isClosing ? 'opacity-0' : 'opacity-100'}`}>
           <div className="w-full max-w-6xl flex justify-between mb-8 border-b border-amber-900/30 pb-4 items-center">
             <h2 className="text-2xl font-black text-amber-500 uppercase italic">Анализ систем</h2>
-            <button onClick={() => {setShowCompareResults(false); setCompareList([]); setCompareMode(false);}} className="px-6 py-2 bg-amber-600 text-black font-black rounded text-xs uppercase">Закрыть</button>
+            <button onClick={() => closeWithAnim(setShowCompareResults)} className="px-6 py-2 bg-amber-600 text-black font-black rounded text-xs uppercase">Закрыть</button>
           </div>
-          <div className="flex flex-wrap justify-center gap-6 w-full modal-animate">
+          <div className={`flex flex-wrap justify-center gap-6 w-full modal-animate ${isClosing ? 'modal-exit' : ''}`}>
             {compareList.map(s => (
               <div key={s.name} className="w-full max-w-[400px]">
                 <SpellModal 

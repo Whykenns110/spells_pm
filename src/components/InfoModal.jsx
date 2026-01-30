@@ -8,7 +8,8 @@ const INFO_SECTIONS = [
   { id: 'lvls', icon: '📈', label: 'Уровни' },
 ];
 
-export default function InfoModal({ isOpen, onClose }) {
+// Добавили пропс isClosing
+export default function InfoModal({ isOpen, isClosing, onClose }) {
   const scrollRef = useRef(null);
   const scrollToSection = (id) => {
     const element = document.getElementById(`info-${id}`);
@@ -18,9 +19,12 @@ export default function InfoModal({ isOpen, onClose }) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/95 backdrop-blur-md" onClick={onClose}>
+    <div 
+      className={`fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/95 backdrop-blur-md transition-opacity duration-300 ${isClosing ? 'opacity-0' : 'opacity-100'}`} 
+      onClick={onClose}
+    >
       <div 
-        className="bg-[#121212] border-2 border-amber-900/50 rounded-3xl w-full max-w-4xl h-[85vh] overflow-hidden shadow-[0_0_50px_rgba(245,158,11,0.15)] flex flex-col font-mono modal-animate"
+        className={`bg-[#121212] border-2 border-amber-900/50 rounded-3xl w-full max-w-4xl h-[85vh] overflow-hidden shadow-[0_0_50px_rgba(245,158,11,0.15)] flex flex-col font-mono modal-animate ${isClosing ? 'modal-exit' : ''}`}
         onClick={e => e.stopPropagation()}
       >
         {/* Header */}
@@ -74,7 +78,7 @@ export default function InfoModal({ isOpen, onClose }) {
             </div>
           </section>
 
-          {/* EQUIP - ИСПРАВЛЕНО: добавлен section id для работы навигации */}
+          {/* EQUIP */}
           <section id="info-equip" className="bg-amber-950/40 p-3 rounded-lg border border-amber-800/50 mt-4">
             <h3 className="text-[20px] font-black uppercase text-amber-500 mb-1 flex items-center gap-2">
               🎒 Снаряжение
