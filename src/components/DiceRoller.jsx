@@ -24,38 +24,48 @@ const Die = ({ sides, texture }) => {
       
       if (val === 1) {
         setStatus('fail');
-        setTimeout(() => setStatus('neutral'), 2000);
+        setTimeout(() => setStatus('neutral'), 2500); // Увеличил время, чтобы насладиться анимацией
       } else if (val === sides) {
         setStatus('success');
-        setTimeout(() => setStatus('neutral'), 2000);
+        setTimeout(() => setStatus('neutral'), 2500);
       }
     }, 200);
   };
 
-  // ЛОГИКА ЦВЕТА ТЕКСТУРЫ (PNG)
-  // Мы используем brightness(0.1) чтобы превратить любую цветную картинку в темную (почти #18181b)
+  // Настройка фильтров и анимаций
   let diceFilter = 'brightness(0.15) contrast(1.2)'; 
-  
+  let animationClass = '';
+  let textGlow = '';
+
   if (status === 'fail') {
     diceFilter = 'sepia(1) saturate(20) hue-rotate(-50deg) drop-shadow(0 0 15px #ef4444) drop-shadow(0 0 25px #ef4444)';
+    animationClass = 'animate-danger-pulse'; // Кастомный класс мигания
+    textGlow = '0 0 10px #ef4444, 0 0 20px #ef4444';
   } else if (status === 'success') {
     diceFilter = 'sepia(1) saturate(20) hue-rotate(90deg) drop-shadow(0 0 15px #10b981) drop-shadow(0 0 25px #10b981)';
+    textGlow = '0 0 10px #10b981, 0 0 20px #10b981';
   }
-
-  // Свечение текста
-  let textGlow = '';
-  if (status === 'fail') textGlow = '0 0 10px #ef4444, 0 0 20px #ef4444';
-  if (status === 'success') textGlow = '0 0 10px #10b981, 0 0 20px #10b981';
 
   return (
     <div className="relative flex items-center group">
+      {/* Добавляем стили анимации прямо в компонент */}
+      <style>{`
+        @keyframes danger-pulse {
+          0%, 100% { filter: sepia(1) saturate(20) hue-rotate(-50deg) drop-shadow(0 0 15px #ef4444) drop-shadow(0 0 25px #ef4444) brightness(1); }
+          50% { filter: sepia(1) saturate(25) hue-rotate(-50deg) drop-shadow(0 0 25px #ff0000) drop-shadow(0 0 40px #ff0000) brightness(1.5); }
+        }
+        .animate-danger-pulse {
+          animation: danger-pulse 0.8s infinite ease-in-out;
+        }
+      `}</style>
+
       <button
         onClick={roll}
         className={`w-16 h-16 md:w-20 md:h-20 flex items-center justify-center transition-all active:scale-95 relative overflow-visible bg-transparent`}
       >
-        {/* Слой с текстурой (PNG или заливка для D100) */}
+        {/* Слой с текстурой */}
         <div 
-          className="absolute inset-0 transition-all duration-300"
+          className={`absolute inset-0 transition-all duration-700 ease-in-out ${animationClass}`}
           style={{ 
             backgroundColor: sides === 100 ? '#18181b' : 'transparent',
             borderRadius: sides === 100 ? '9999px' : '0',
@@ -64,17 +74,17 @@ const Die = ({ sides, texture }) => {
             backgroundSize: 'contain', 
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
-            filter: diceFilter // Красит PNG в темный или в ауру
+            filter: diceFilter
           }}
         />
 
         {/* Слой с текстом */}
         <span 
-          className="z-10 font-black select-none leading-none flex items-center justify-center transition-all duration-300"
+          className="z-10 font-black select-none leading-none flex items-center justify-center transition-all duration-700 ease-in-out"
           style={{
             fontSize: '1.2rem',
-            color: '#18181b', // Цвет цифр
-            WebkitTextFillColor: '#18181b', // Форсированный цвет для некоторых браузеров
+            color: '#18181b',
+            WebkitTextFillColor: '#18181b',
             textShadow: `
                2px  2px 0 #f59e0b, -2px -2px 0 #f59e0b,
                2px -2px 0 #f59e0b, -2px  2px 0 #f59e0b,
