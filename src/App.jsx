@@ -5,6 +5,7 @@ import SpellCard from "./components/SpellCard";
 import SpellModal from "./components/SpellModal";
 import CombatMode from "./modules/CombatMode";
 import DiceRoller from "./components/DiceRoller";
+import bgImage from "./shesterenki.png";
 import ikona from "./ikona.jpg";
 import InfoModal from "./components/InfoModal";
 import FilterPanel from "./components/FilterPanel"; 
@@ -78,14 +79,26 @@ export default function App() {
 
   const toggleFav = (s) => setFavorites(p => p.find(f => f.name === s.name) ? p.filter(f => f.name !== s.name) : [...p, s]);
 
-  return (
-    <div className="min-h-screen bg-[#0a0a0a] text-amber-50 font-serif flex flex-col h-screen overflow-hidden">
-      <header className="p-6 pb-2 w-full flex-shrink-0 z-10">
-        <div className="max-w-[1400px] mx-auto border-b border-amber-900/20 pb-2">
-          <h1 className="text-3xl md:text-5xl font-black text-amber-500 uppercase italic tracking-tighter">АРХИВ ПАРОМЕХАНИКА</h1>
-          <p className="text-amber-700 text-[10px] uppercase tracking-[0.3em] font-sans font-bold italic mt-1">Онямашки2.0! v.0.9.3.1 • Тупой-Вайбкодер: Whykenns</p>
-        </div>
-      </header>
+ return (
+  <div 
+    className="min-h-screen text-amber-50 font-serif flex flex-col h-screen overflow-hidden relative"
+    style={{
+      backgroundImage: `url(${bgImage})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundAttachment: 'fixed', // Чтобы фон не дергался при скролле
+      backgroundColor: '#0a0a0a'
+    }}
+  >
+    {/* Затемняющий слой, чтобы текст не сливался с шестеренками */}
+    <div className="absolute inset-0 bg-black/60 -z-0 pointer-events-none" />
+
+    <header className="p-6 pb-2 w-full flex-shrink-0 z-10">
+      <div className="max-w-[1400px] mx-auto border-b border-amber-900/20 pb-2">
+        <h1 className="text-3xl md:text-5xl font-black text-amber-500 uppercase italic tracking-tighter">АРХИВ ПАРОМЕХАНИКА</h1>
+        <p className="text-amber-700 text-[10px] uppercase tracking-[0.3em] font-sans font-bold italic mt-1">Новый фон! v.0.9.4.0 • Тупой-Вайбкодер: Whykenns</p>
+      </div>
+    </header>
 
       <div className="flex gap-4 px-4 md:px-10 pb-4 max-w-[1600px] mx-auto w-full flex-grow overflow-hidden relative">
         <div className="w-20 md:w-28 flex-shrink-0 flex flex-col h-full z-10">

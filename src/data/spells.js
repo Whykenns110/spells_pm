@@ -234,21 +234,21 @@ const spellsList = [
       `
   },
   {
-    name: "Хуечечебные травы",
-    level: "Заговор",
-    components: ["В"],
+    name: "Глаз контроля",
+    level: "2:УР",
+    components: ["В", "С", "М"],
     description: `
         <h3 class="text-2xl font-black mb-2 uppercase italic tracking-tighter">Лечебные травы</h3>
-        <p class="text-sm mb-1 opacity-80 font-bold uppercase tracking-widest">Заговор | Регенерирующие – Персональная</p>
+        <p class="text-sm mb-1 opacity-80 font-bold uppercase tracking-widest">Заговор | Созидание – Конструирование</p>
         <div class="grid grid-cols-2 gap-2 text-sm bg-white/5 p-3 rounded border border-white/10 mb-4 font-sans text-white/90">
           <p><strong>Время:</strong> 1 действие</p>
-          <p><strong>Дистанция:</strong> На себя</p>
-          <p><strong>Длительность:</strong> 2 минуты</p>
-          <p><strong>Компоненты:</strong> В</p>
+      
+          <p><strong>Длительность:</strong> 2 часа</p>
+          <p><strong>Компоненты:</strong> В, С, М (Кристальный глаз)</p>
         </div>
-        <p class="mb-3 text-white/80 leading-relaxed font-sans">В вашей руке из древесной щепы и эфирного пара материализуется курительная трубка, набитая светящимися травами. Вдыхая терпкий дым, вы чувствуете, как усталость уходит, а раны затягиваются теплой энергией.</p>
+        <p class="mb-3 text-white/80 leading-relaxed font-sans">Держа свой вырванный кристальный глаз в руке, вы произносите заклинание преобразуя его в Глаз контроля. Поражая противника, вы наседаете на него сверху, выдавливая его глаз и заменяя на свое творение.</p>
         <div class="bg-white/5 border-l-4 border-current p-3 italic text-white/70 text-xs">
-          Дает статус регенерации: <strong>0.42% макс. здоровья в секунду</strong>. Максимальный порог лечения: 50% ОЗ. Использовать 1 раз за бой. На 5 ур: до 60%, на 11 ур: до 80%, на 17 ур: до 100%. Курение вредит здоровью, но лечит душу.
+          Что бы использовать заклинание, прежде создайте <strong>Кристальный глаз</strong> и <strong>выколите его</strong>. Вставив глаз в глазницу противника, вы сможете контролировать его поведение в течении 2 игровых часов. Во время контроля, враг не осознает себя и не помнит происходящего до. Что бы досрочно завершить контроль, произнесите фразу "reverto".
         </div>
       `
   }
