@@ -24,7 +24,7 @@ const Die = ({ sides, texture }) => {
       
       if (val === 1) {
         setStatus('fail');
-        setTimeout(() => setStatus('neutral'), 2500); // Увеличил время, чтобы насладиться анимацией
+        setTimeout(() => setStatus('neutral'), 2500);
       } else if (val === sides) {
         setStatus('success');
         setTimeout(() => setStatus('neutral'), 2500);
@@ -32,53 +32,45 @@ const Die = ({ sides, texture }) => {
     }, 200);
   };
 
-  // Настройка фильтров и анимаций
-  let diceFilter = 'brightness(0.15) contrast(1.2)'; 
-  let animationClass = '';
-  let textGlow = '';
-
-  if (status === 'fail') {
-    diceFilter = 'sepia(1) saturate(20) hue-rotate(-50deg) drop-shadow(0 0 15px #ef4444) drop-shadow(0 0 25px #ef4444)';
-    animationClass = 'animate-danger-pulse'; // Кастомный класс мигания
-    textGlow = '0 0 10px #ef4444, 0 0 20px #ef4444';
-  } else if (status === 'success') {
-    diceFilter = 'sepia(1) saturate(20) hue-rotate(90deg) drop-shadow(0 0 15px #10b981) drop-shadow(0 0 25px #10b981)';
-    textGlow = '0 0 10px #10b981, 0 0 20px #10b981';
-  }
-
   return (
     <div className="relative flex items-center group">
-      {/* Добавляем стили анимации прямо в компонент */}
+      {/* Анимация пульсации для фейла */}
       <style>{`
-        @keyframes danger-pulse {
-          0%, 100% { filter: sepia(1) saturate(20) hue-rotate(-50deg) drop-shadow(0 0 15px #ef4444) drop-shadow(0 0 25px #ef4444) brightness(1); }
-          50% { filter: sepia(1) saturate(25) hue-rotate(-50deg) drop-shadow(0 0 25px #ff0000) drop-shadow(0 0 40px #ff0000) brightness(1.5); }
+        @keyframes danger-fade {
+          0%, 100% { opacity: 0.6; transform: scale(1); }
+          50% { opacity: 1; transform: scale(1.1); }
         }
-        .animate-danger-pulse {
-          animation: danger-pulse 0.8s infinite ease-in-out;
+        .animate-danger {
+          animation: danger-fade 0.8s infinite ease-in-out;
         }
       `}</style>
 
       <button
         onClick={roll}
-        className={`w-16 h-16 md:w-20 md:h-20 flex items-center justify-center transition-all active:scale-95 relative overflow-visible bg-transparent`}
+        className="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center transition-all active:scale-95 relative overflow-visible bg-transparent"
       >
-        {/* Слой с текстурой */}
+        {/* СЛОЙ АУРЫ (свечение) — плавно появляется за счет opacity */}
         <div 
-          className={`absolute inset-0 transition-all duration-700 ease-in-out ${animationClass}`}
+          className={`absolute inset-0 transition-opacity duration-700 ease-in-out blur-xl rounded-full
+            ${status === 'fail' ? 'bg-red-600 opacity-60 animate-danger' : 
+              status === 'success' ? 'bg-emerald-500 opacity-60' : 'opacity-0'}`}
+        />
+
+        {/* СЛОЙ ТЕКСТУРЫ (оригинальный цвет PNG) */}
+        <div 
+          className="absolute inset-0 z-0 transition-transform duration-300"
           style={{ 
-            backgroundColor: sides === 100 ? '#18181b' : 'transparent',
+            backgroundColor: sides === 100 ? '#000000' : 'transparent',
             borderRadius: sides === 100 ? '9999px' : '0',
             border: sides === 100 ? '2px solid #27272a' : 'none',
             backgroundImage: texture ? `url(${texture})` : 'none',
             backgroundSize: 'contain', 
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
-            filter: diceFilter
           }}
         />
 
-        {/* Слой с текстом */}
+        {/* СЛОЙ ТЕКСТА */}
         <span 
           className="z-10 font-black select-none leading-none flex items-center justify-center transition-all duration-700 ease-in-out"
           style={{
@@ -90,7 +82,7 @@ const Die = ({ sides, texture }) => {
                2px -2px 0 #f59e0b, -2px  2px 0 #f59e0b,
                3px  0px 0 #f59e0b, -3px  0px 0 #f59e0b,
                0px  3px 0 #f59e0b,  0px -3px 0 #f59e0b
-               ${textGlow ? ', ' + textGlow : ''}
+               ${status !== 'neutral' ? `, 0 0 15px ${status === 'fail' ? '#ef4444' : '#10b981'}` : ''}
             `
           }}
         >
@@ -110,7 +102,7 @@ const Die = ({ sides, texture }) => {
 
 export default function DiceRoller({ setShowDiceInfo }) {
   const diceConfig = [
-    { sides: 100 },
+    { sides: 100, texture: 'black' },
     { sides: 20, texture: img20 },
     { sides: 12, texture: img12 },
     { sides: 10, texture: img10 },

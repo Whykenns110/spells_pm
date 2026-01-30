@@ -96,7 +96,7 @@ export default function App() {
     <header className="p-6 pb-2 w-full flex-shrink-0 z-10">
       <div className="max-w-[1400px] mx-auto border-b border-amber-900/20 pb-2">
         <h1 className="text-3xl md:text-5xl font-black text-amber-500 uppercase italic tracking-tighter">АРХИВ ПАРОМЕХАНИКА</h1>
-        <p className="text-amber-700 text-[10px] uppercase tracking-[0.3em] font-sans font-bold italic mt-1">Обновленные дайсы! v.0.9.6.0 • Тупой-Вайбкодер: Whykenns</p>
+        <p className="text-amber-700 text-[10px] uppercase tracking-[0.3em] font-sans font-bold italic mt-1">Обновленные дайсы! v.0.9.6.6 • Тупой-Вайбкодер: Whykenns</p>
       </div>
     </header>
 
