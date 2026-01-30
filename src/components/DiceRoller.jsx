@@ -3,21 +3,44 @@ import React, { useState } from 'react';
 const Die = ({ sides, clip, isRound }) => {
   const [result, setResult] = useState(`1к${sides}`);
   const [isRolling, setIsRolling] = useState(false);
+  const [status, setStatus] = useState('neutral');
 
   const roll = () => {
     setIsRolling(true);
+    setStatus('neutral'); 
+    
     const val = Math.floor(Math.random() * sides) + 1;
-    setResult(val);
-    setTimeout(() => setIsRolling(false), 200);
+    
+    setTimeout(() => {
+      setResult(val);
+      setIsRolling(false);
+      
+      if (val === 1) {
+        setStatus('fail');
+        setTimeout(() => setStatus('neutral'), 2000);
+      } else if (val === sides) {
+        setStatus('success');
+        setTimeout(() => setStatus('neutral'), 2000);
+      } else {
+        setStatus('neutral');
+      }
+    }, 200);
   };
 
   return (
     <div className="relative flex items-center group">
       <button
         onClick={roll}
-        className={`w-12 h-12 md:w-14 md:h-14 flex items-center justify-center text-[11px] md:text-[13px] font-black border border-white/10 transition-all active:scale-95 shadow-xl
+        className={`w-12 h-12 md:w-14 md:h-14 flex items-center justify-center text-[11px] md:text-[13px] font-black border transition-all active:scale-95 shadow-xl
           ${isRound ? 'rounded-full' : ''} 
-          ${isRolling ? 'bg-red-700 text-white border-red-500' : 'bg-zinc-900 text-amber-50 hover:bg-zinc-800 hover:border-white/30'}`}
+          ${isRolling 
+            ? 'bg-red-700 text-white border-red-500 animate-pulse' 
+            : status === 'fail' 
+              ? 'bg-red-600 text-white border-red-400' 
+              : status === 'success' 
+                ? 'bg-emerald-600 text-white border-emerald-400' 
+                : 'bg-zinc-900 text-amber-50 border-white/10 hover:bg-zinc-800 hover:border-white/30' 
+          }`}
         style={{ clipPath: clip }}
       >
         {result}
@@ -26,6 +49,7 @@ const Die = ({ sides, clip, isRound }) => {
         onClick={(e) => {
           e.stopPropagation();
           setResult(`1к${sides}`);
+          setStatus('neutral');
         }}
         className="absolute -right-5 w-4 h-4 bg-red-900 text-white text-[8px] rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600 border border-black z-10"
       >
@@ -35,7 +59,6 @@ const Die = ({ sides, clip, isRound }) => {
   );
 };
 
-// ИСПРАВЛЕНО: Аргумент изменен на setShowDiceInfo, чтобы совпадать с App.jsx
 export default function DiceRoller({ setShowDiceInfo }) {
   const diceConfig = [
     { sides: 100, isRound: true },
@@ -50,7 +73,7 @@ export default function DiceRoller({ setShowDiceInfo }) {
   return (
     <div className="flex flex-col items-center gap-5 mt-2">
       <button 
-        onClick={() => setShowDiceInfo(true)} // ИСПРАВЛЕНО: вызываем верную функцию
+        onClick={() => setShowDiceInfo(true)}
         className="w-8 h-8 bg-[#3d2314] rounded-full flex items-center justify-center text-amber-500 font-black italic text-xs shadow-lg hover:bg-black transition-colors border border-amber-900/20"
       >
         ?

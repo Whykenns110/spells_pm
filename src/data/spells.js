@@ -238,7 +238,7 @@ const spellsList = [
     level: "2:УР",
     components: ["В", "С", "М"],
     description: `
-        <h3 class="text-2xl font-black mb-2 uppercase italic tracking-tighter">Лечебные травы</h3>
+        <h3 class="text-2xl font-black mb-2 uppercase italic tracking-tighter">Глаз контроля</h3>
         <p class="text-sm mb-1 opacity-80 font-bold uppercase tracking-widest">Заговор | Созидание – Конструирование</p>
         <div class="grid grid-cols-2 gap-2 text-sm bg-white/5 p-3 rounded border border-white/10 mb-4 font-sans text-white/90">
           <p><strong>Время:</strong> 1 действие</p>
