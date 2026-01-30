@@ -20,7 +20,7 @@ export default function InfoModal({ isOpen, onClose }) {
   return (
     <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/95 backdrop-blur-md" onClick={onClose}>
       <div 
-        className="bg-[#121212] border-2 border-amber-900/50 rounded-3xl w-full max-w-4xl h-[85vh] overflow-hidden shadow-[0_0_50px_rgba(245,158,11,0.15)] flex flex-col font-mono"
+        className="bg-[#121212] border-2 border-amber-900/50 rounded-3xl w-full max-w-4xl h-[85vh] overflow-hidden shadow-[0_0_50px_rgba(245,158,11,0.15)] flex flex-col font-mono modal-animate"
         onClick={e => e.stopPropagation()}
       >
         {/* Header */}

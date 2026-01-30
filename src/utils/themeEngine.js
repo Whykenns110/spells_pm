@@ -37,7 +37,7 @@ export const getSpellTheme = (spell) => {
   }
 
   // 4. ПРИОРИТЕТ 4: Фиолетовая тема
-  const purpleKeywords = ["глаз", "кристальн", "молот", "вспышка клапана", "вакуумный рывок", "прорицание", "помехи"];
+  const purpleKeywords = ["помехи", "обездвиживание", "оглушение", "паралич"];
   if (purpleKeywords.some(key => name.includes(key) || desc.includes(key))) {
     return {
       modalBorder: "border-purple-600",
@@ -45,6 +45,17 @@ export const getSpellTheme = (spell) => {
       text: "text-purple-400",
       accent: "#c084fc",
       glow: "shadow-[0_0_40px_rgba(168,85,247,0.3)]"
+    };
+  }
+
+  const creationKeywords = ["конструирование", "модификация среды", "утилитарные", "созидание"];
+  if (creationKeywords.some(key => desc.includes(key))) {
+    return {
+      modalBorder: "border-orange-500",
+      header: "bg-orange-600",
+      text: "text-orange-400",
+      accent: "#f97316",
+      glow: "shadow-[0_0_40px_rgba(249,115,22,0.3)]"
     };
   }
 

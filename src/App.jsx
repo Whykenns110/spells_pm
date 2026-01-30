@@ -70,7 +70,7 @@ export default function App() {
       <header className="p-6 pb-2 w-full flex-shrink-0 z-10">
         <div className="max-w-[1400px] mx-auto border-b border-amber-900/20 pb-2">
           <h1 className="text-3xl md:text-5xl font-black text-amber-500 uppercase italic tracking-tighter">АРХИВ ПАРОМЕХАНИКА</h1>
-          <p className="text-amber-700 text-[10px] uppercase tracking-[0.3em] font-sans font-bold italic mt-1">БАГИ СДОХЛИ! v.0.9.1.1 • Тупой-Вайбкодер: Whykenns</p>
+          <p className="text-amber-700 text-[10px] uppercase tracking-[0.3em] font-sans font-bold italic mt-1">Онямашки! v.0.9.2.0 • Тупой-Вайбкодер: Whykenns</p>
         </div>
       </header>
 
@@ -83,7 +83,6 @@ export default function App() {
             </button>
             <button onClick={() => setShowCombatInfo(true)} className="mt-2 w-8 h-8 bg-[#3d2314] rounded-full flex items-center justify-center text-amber-500 font-black italic border border-amber-900/20">i</button>
             <div className="w-full border-t border-black/10 my-4" />
-            {/* Синхронизировал имя пропса с DiceRoller.jsx */}
             <DiceRoller setShowDiceInfo={setShowDiceInfo} />
           </div>
         </div>
@@ -141,12 +140,12 @@ export default function App() {
         </div>
       </div>
 
-      {/* --- МОДАЛЬНЫЕ ОКНА --- */}
+      {/* --- МОДАЛЬНЫЕ ОКНА С АНИМАЦИЕЙ --- */}
       <InfoModal isOpen={showInfoModal} onClose={() => setShowInfoModal(false)} />
       
       {showCombatInfo && (
         <div className="fixed inset-0 z-[10000] flex items-center justify-center bg-black/90 p-4" onClick={() => setShowCombatInfo(false)}>
-           <div className="bg-zinc-900 border-2 border-red-600 p-6 rounded-2xl max-w-lg" onClick={e => e.stopPropagation()}>
+           <div className="bg-zinc-900 border-2 border-red-600 p-6 rounded-2xl max-w-lg modal-animate" onClick={e => e.stopPropagation()}>
               <h2 className="text-red-500 font-black text-2xl mb-4">ИНФО БИТВЫ</h2>
               <p className="text-amber-100 text-sm italic leading-relaxed">Здесь находятся протоколы ведения боя. Следите за дебаффами и состоянием безумия при использовании систем.</p>
               <button onClick={() => setShowCombatInfo(false)} className="mt-6 w-full py-2 bg-red-600 text-white font-black rounded uppercase">Понял</button>
@@ -154,10 +153,9 @@ export default function App() {
         </div>
       )}
 
-      {/* Добавлено окно для кубиков */}
       {showDiceInfo && (
         <div className="fixed inset-0 z-[10000] flex items-center justify-center bg-black/90 p-4" onClick={() => setShowDiceInfo(false)}>
-           <div className="bg-zinc-900 border-2 border-red-600 p-6 rounded-2xl max-w-lg" onClick={e => e.stopPropagation()}>
+           <div className="bg-zinc-900 border-2 border-red-600 p-6 rounded-2xl max-w-lg modal-animate" onClick={e => e.stopPropagation()}>
               <h2 className="text-red-500 font-black text-2xl mb-4 uppercase">Система рандома</h2>
               <p className="text-red-100 text-sm italic leading-relaxed">Используйте модули костей ниже для расчёта вероятностей и повреждений механизмов. Сброс числа по красной кнопке при наведении на кость.</p>
               <button onClick={() => setShowDiceInfo(false)} className="mt-6 w-full py-2 bg-red-600 text-white font-black rounded uppercase">Принято</button>
@@ -167,7 +165,7 @@ export default function App() {
 
       {activeSpell && (
         <div className="fixed inset-0 z-[500] flex items-center justify-center p-4 bg-black/95 backdrop-blur-sm" onClick={() => setActiveSpell(null)}>
-          <div className="max-w-2xl w-full" onClick={e => e.stopPropagation()}>
+          <div className="max-w-2xl w-full modal-animate" onClick={e => e.stopPropagation()}>
             <SpellModal spell={activeSpell} theme={getSpellTheme(activeSpell)} onClose={() => setActiveSpell(null)} />
           </div>
         </div>
@@ -179,10 +177,9 @@ export default function App() {
             <h2 className="text-2xl font-black text-amber-500 uppercase italic">Анализ систем</h2>
             <button onClick={() => {setShowCompareResults(false); setCompareList([]); setCompareMode(false);}} className="px-6 py-2 bg-amber-600 text-black font-black rounded text-xs uppercase">Закрыть</button>
           </div>
-          <div className="flex flex-wrap justify-center gap-6 w-full">
+          <div className="flex flex-wrap justify-center gap-6 w-full modal-animate">
             {compareList.map(s => (
               <div key={s.name} className="w-full max-w-[400px]">
-                {/* ИСПРАВЛЕНО: Теперь onClose реально удаляет карточку из списка сравнения */}
                 <SpellModal 
                   spell={s} 
                   theme={getSpellTheme(s)} 

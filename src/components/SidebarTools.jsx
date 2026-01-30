@@ -38,7 +38,7 @@ export default function SidebarTools({ type }) {
 
       {isOpen && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md" onClick={toggle}>
-          <div className="bg-[#efe7d6] border-4 border-[#3d2314] rounded-2xl w-full max-w-sm overflow-hidden shadow-2xl flex flex-col" onClick={e => e.stopPropagation()}>
+          <div className="bg-[#efe7d6] border-4 border-[#3d2314] rounded-2xl w-full max-w-sm overflow-hidden shadow-2xl flex flex-col modal-animate" onClick={e => e.stopPropagation()}>
             
             <div className="bg-[#3d2314] p-3 flex justify-between items-center">
               <span className="text-amber-500 font-black text-xs uppercase tracking-widest">{labels[type]}</span>
@@ -94,7 +94,7 @@ export default function SidebarTools({ type }) {
                 <textarea 
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
-                  className="w-full h-64 bg-white/50 border-2 border-[#3d2314] p-4 outline-none resize-none font-bold italic"
+                  className="w-full h-64 bg-white/50 border-2 border-[#3d2314] p-4 outline-none resize-none font-bold italic modal-animate"
                   placeholder="Заметки инженера..."
                 />
               )}

@@ -28,21 +28,47 @@
   </script>
 
   <style>
-    /* Назначаем шрифт всему документу через !important, чтобы точно сработало */
-    * {
-      font-family: 'JetBrains Mono', monospace !important;
-    }
+  * {
+    font-family: 'JetBrains Mono', monospace !important;
+  }
 
-    /* Убираем курсив там, где ты просил (заголовки и кнопки) */
-    h1, h2, h3, h4, h5, h6, button, select, input, .title, .spell-name {
-      font-style: normal !important;
-      text-transform: uppercase; /* Опционально: сделает заголовки более 'чертежными' */
-    }
+  h1, h2, h3, h4, h5, h6, button, select, input, .title, .spell-name {
+    font-style: normal !important;
+    text-transform: uppercase;
+  }
 
-    /* Если хочешь убрать курсив ВООБЩЕ у всего текста на сайте, 
-       удали символы комментария /* ниже: */
-    /* * { font-style: normal !important; } */
-  </style>
+  /* ОПТИМИЗИРОВАННЫЕ АНИМАЦИИ (БЕЗ ЛАГОВ) */
+  .modal-animate {
+  /* Используем 3D ускорение, чтобы видеокарта помогала процессору */
+  animation: popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform: translateZ(0); 
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+}
+
+@keyframes popIn {
+  0% { transform: scale(0.5); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+  
+
+  /* Класс появления */
+  .modal-animate {
+    animation: popIn 0.3s cubic-bezier(0.2, 1, 0.3, 1) forwards;
+    will-change: transform, opacity; /* Подсказка браузеру подготовить видеокарту */
+    backface-visibility: hidden;
+  }
+
+  /* Эффект для оверлея (черного фона), чтобы он плавно проявлялся */
+  .fixed.inset-0 {
+    transition: opacity 0.3s ease;
+    backdrop-filter: blur(4px); /* Размытие тоже может лагать, если комп слабый. Если лагает — удали эту строку */
+  }
+  button:active {
+  transform: scale(0.95);
+  transition: transform 0.1s;
+}
+</style>
 </head>
 <body>
   <div id="root"></div>
