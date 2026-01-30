@@ -67,6 +67,21 @@
   button:active {
   transform: scale(0.95);
   transition: transform 0.1s;
+  /* Эффект для заднего плана при открытой модалке */
+/* Мы ищем div с id="root", так как в нем лежит всё приложение */
+body:has(.fixed.inset-0) #root {
+  transform: scale(1.05); /* Легкое приближение */
+  filter: blur(2px) grayscale(20%); /* Дополнительный фокус: легкий блюр и обесцвечивание */
+  transition: transform 0.4s cubic-bezier(0.2, 1, 0.3, 1), filter 0.4s ease;
+  pointer-events: none; /* Чтобы нельзя было кликать по фону сквозь оверлей */
+}
+
+/* Возвращаем всё в норму, когда модалок нет */
+#root {
+  transition: transform 0.4s cubic-bezier(0.2, 1, 0.3, 1), filter 0.4s ease;
+  transform: scale(1);
+  will-change: transform, filter;
+}
 }
 </style>
 </head>
