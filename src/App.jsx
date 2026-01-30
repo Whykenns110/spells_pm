@@ -96,7 +96,7 @@ export default function App() {
     <header className="p-6 pb-2 w-full flex-shrink-0 z-10">
       <div className="max-w-[1400px] mx-auto border-b border-amber-900/20 pb-2">
         <h1 className="text-3xl md:text-5xl font-black text-amber-500 uppercase italic tracking-tighter">АРХИВ ПАРОМЕХАНИКА</h1>
-        <p className="text-amber-700 text-[10px] uppercase tracking-[0.3em] font-sans font-bold italic mt-1">Новый фон! v.0.9.4.0 • Тупой-Вайбкодер: Whykenns</p>
+        <p className="text-amber-700 text-[10px] uppercase tracking-[0.3em] font-sans font-bold italic mt-1">Обновленные дайсы! v.0.9.6.0 • Тупой-Вайбкодер: Whykenns</p>
       </div>
     </header>
 
@@ -105,7 +105,7 @@ export default function App() {
           <div className="bg-amber-600 py-2 rounded-t-xl text-center font-black text-[14px] text-black uppercase tracking-tighter">Система</div>
           <div className="bg-amber-500 flex-grow flex flex-col items-center py-4 rounded-b-xl border-x border-b border-amber-600/50 shadow-2xl overflow-y-auto no-scrollbar">
             <button onClick={() => setIsCombatMode(!isCombatMode)} className={`w-12 h-12 md:w-16 md:h-16 rounded-xl flex items-center justify-center transition-all border-b-4 ${isCombatMode ? 'bg-red-700 border-red-950 translate-y-1' : 'bg-zinc-900 border-black hover:bg-zinc-800'}`}>
-              <span className="text-white text-xl">⚔️</span>
+              <span className="text-white text-3xl">⚔️</span>
             </button>
             <button onClick={() => setShowCombatInfo(true)} className="mt-2 w-8 h-8 bg-[#3d2314] rounded-full flex items-center justify-center text-amber-500 font-black italic border border-amber-900/20">i</button>
             <div className="w-full border-t border-black/10 my-4" />
