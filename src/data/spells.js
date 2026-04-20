@@ -105,6 +105,24 @@ const spellsList = [
       `
   },
   {
+    name: "Эго-Токсин",
+    level: "1:УР",
+    components: ["С"],
+    description: `
+        <h3 class="text-2xl font-black mb-2 uppercase italic">Эго-Токсин</h3>
+        <p class="text-sm mb-1 opacity-80 font-bold uppercase font-sans">1-й уровень | Регенерирующие – Массовая</p>
+        <div class="grid grid-cols-2 gap-2 text-sm bg-white/5 p-3 rounded border border-white/10 mb-4 font-sans text-white/90">
+          <p><strong>Время:</strong> 1 действие</p>
+          <p><strong>Компоненты:</strong> С</p>
+          <p><strong>Длительность:</strong> Мгновенно</p>
+        </div>
+        <p class="mb-3 text-white/80 leading-relaxed font-serif">Вы переворачиваете ладонь к небу и сжимая руку в кулак, образуя серый густой пар, внутри которого материализуются 2 склянки с зеленой жидкостью, что после падают вам в руки.</p>
+        <div class="bg-white/5 border-l-4 border-current p-3 italic text-white/70 text-xs">
+          <strong>Моментально регенерирует 1к4 хитов</strong>. Можно выпить лишь раз за бой или 2 раза вне боя. Отравляет созидателя но исцеляет союзников. Общее значение регенерации здоровья увеличивается с уровнем: 1к8 (5 ур), 1к10 (11 ур), 1к12 (17 ур).
+        </div>
+      `
+  },
+  {
     name: "Вспышка клапана",
     level: "Заговор",
     components: ["В"],
@@ -243,11 +261,11 @@ const spellsList = [
         <div class="grid grid-cols-2 gap-2 text-sm bg-white/5 p-3 rounded border border-white/10 mb-4 font-sans text-white/90">
           <p><strong>Время:</strong> 15 мин</p>
           <p><strong>Дистанция:</strong> На себя</p>
-          <p><strong>Компоненты:</strong> С, М (Любой вид ДНК)</p>
+          <p><strong>Компоненты:</strong> С, В, М (Любой вид ДНК)</p>
         </div>
         <p class="mb-3 text-white/80 leading-relaxed font-sans italic">Держа в руке ДНК любого существа вы произносите заклинание, съедаете частицу существа и сгибаясь пополам - осуществляете трансформацию</p>
         <div class="bg-white/5 border-l-4 border-current p-3 italic text-white/70 text-xs">
-          Под действием заклинания ваше тело изменяется до неузноваемости, принимая облик нужного вам существа. Будучи обличенным в иной облик, вы получаете <strong>1 единициу психического урона<strong> каждые 3 минуты. Достигнув порог в 3 единицы псих. урона, вы подучаете эффект <strong>"Безумие"<strong> (см <strong>ИНФО ПАРОМЕХАНИКА<strong>).
+          Под действием заклинания ваше тело изменяется до неузноваемости, принимая облик нужного вам существа. Будучи обличенным в иной облик, вы получаете <strong>1 единициу психического урона</strong> каждые 3 минуты. Достигнув порог в 3 единицы псих. урона, вы подучаете эффект <strong>"Безумие"</strong> (см <strong>ИНФО ПАРОМЕХАНИКА</strong>).
         </div>
       `
   },
