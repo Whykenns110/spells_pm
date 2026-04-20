@@ -41,16 +41,16 @@ const spellsList = [
           <p><strong>Время:</strong> 1 действие</p>
           <p><strong>Дистанция:</strong> 30 футов</p>
           <p><strong>Компоненты:</strong> В, С</p>
-          <p><strong>Урон:</strong> 2d8 силовой</p>
+          <p><strong>Урон:</strong> 1к8 силовой</p>
         </div>
         <p class="mb-3 text-white/80 leading-relaxed font-sans">Вы резко выбрасываете руку вперед, и из густого облака пара в вашей ладони материализуется вращающийся стальной снаряд, окутанный турбулентными потоками воздуха. Болт летит с пронзительным свистом, разрезая пространство.</p>
         <div class="bg-white/5 border-l-4 border-current p-3 italic text-white/70 text-xs">
-          Цель должна пройти спасбросок Силы. При провале она получает <strong>2d8 силового урона</strong>, отбрасывается на 5 футов и падает ничком. При успехе получает только половину урона.
+          Цель должна пройти спасбросок Силы. При провале она получает <strong>1к8 силового урона</strong>, отбрасывается на 5 футов и падает ничком. При успехе получает только половину урона.
         </div>
       `
   },
   {
-    name: "Вакуумный рывок",
+    name: "Вакуумная дыра",
     level: "2:УР",
     components: ["В", "С"],
     description: `
@@ -230,6 +230,24 @@ const spellsList = [
         <p class="mb-3 text-white/80 leading-relaxed font-sans italic">Вы крепко держите медную катушку в руках и совершаете рывок, тратя дополнительное действие. Приближаясь к врагу вы касаетесь его медной катушкой, трансформируя ее в толстые медные лозы, окутывающие врага.</p>
         <div class="bg-white/5 border-l-4 border-current p-3 italic text-white/70 text-xs">
           Наносит <strong>1к4 колотого урона шипами</strong> при попытке действия. Урон растет: 1к8 (5 ур), 1к10 (11 ур), 1к12 (17 ур).
+        </div>
+      `
+  },
+  {
+    name: "Доппельгангер",
+    level: "1:УР",
+    components: ["В", "С", "М"],
+    description: `
+        <h3 class="text-2xl font-black mb-2 uppercase italic tracking-tighter">Доппельгангер</h3>
+        <p class="text-sm mb-1 opacity-80 font-bold uppercase tracking-widest">1-Й УРОВЕНЬ | Созидание – Утилитарное</p>
+        <div class="grid grid-cols-2 gap-2 text-sm bg-white/5 p-3 rounded border border-white/10 mb-4 font-sans text-white/90">
+          <p><strong>Время:</strong> 15 мин</p>
+          <p><strong>Дистанция:</strong> На себя</p>
+          <p><strong>Компоненты:</strong> С, М (Любой вид ДНК)</p>
+        </div>
+        <p class="mb-3 text-white/80 leading-relaxed font-sans italic">Держа в руке ДНК любого существа вы произносите заклинание, съедаете частицу существа и сгибаясь пополам - осуществляете трансформацию</p>
+        <div class="bg-white/5 border-l-4 border-current p-3 italic text-white/70 text-xs">
+          Под действием заклинания ваше тело изменяется до неузноваемости, принимая облик нужного вам существа. Будучи обличенным в иной облик, вы получаете <strong>1 единициу психического урона<strong> каждые 3 минуты. Достигнув порог в 3 единицы псих. урона, вы подучаете эффект <strong>"Безумие"<strong> (см <strong>ИНФО ПАРОМЕХАНИКА<strong>).
         </div>
       `
   },
