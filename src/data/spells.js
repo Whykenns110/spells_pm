@@ -74,7 +74,7 @@ const spellsList = [
     components: ["В", "С", "М"],
     description: `
         <h3 class="text-2xl font-black mb-2 uppercase italic">Верньерный щит</h3>
-        <p class="text-sm mb-1 opacity-80 font-bold uppercase font-sans">3-й уровень | Защитные – Баррикады</p>
+        <p class="text-sm mb-1 opacity-80 font-bold uppercase font-sans">3-й уровень | Защитные – Доп.Броня</p>
         <div class="grid grid-cols-2 gap-2 text-sm bg-white/5 p-3 rounded border border-white/10 mb-4 font-sans text-white/90">
           <p><strong>Время:</strong> 1 действие</p>
           <p><strong>Дистанция:</strong> на себя</p>
@@ -82,7 +82,7 @@ const spellsList = [
         </div>
         <p class="mb-3 text-white/80 leading-relaxed font-serif">Вы активируете скрытые механизмы на доспехах, прижимая латунную пластину к груди. С резким шипением вокруг вас раскрываются прозрачные энергетические верньеры, вибрирующие в такт вашему пульсу.</p>
         <div class="bg-white/5 border-l-4 border-current p-3 italic text-white/70 text-xs">
-          Вы получаете <strong>+3 к КД</strong>. Любое существо, попавшее по вам атакой ближнего боя, получает <strong>1d6 огненного урона</strong> от встречного выброса раскаленного пара. Длительность: 2 хода.
+          Вы получаете <strong>+3 к КД</strong>. Любое существо, попавшее по вам атакой ближнего боя, получает <strong>1к6 огненного урона</strong> от встречного выброса раскаленного пара. Длительность: 2 хода.
         </div>
       `
   },
@@ -248,6 +248,24 @@ const spellsList = [
         <p class="mb-3 text-white/80 leading-relaxed font-sans italic">Вы крепко держите медную катушку в руках и совершаете рывок, тратя дополнительное действие. Приближаясь к врагу вы касаетесь его медной катушкой, трансформируя ее в толстые медные лозы, окутывающие врага.</p>
         <div class="bg-white/5 border-l-4 border-current p-3 italic text-white/70 text-xs">
           Наносит <strong>1к4 колотого урона шипами</strong> при попытке действия. Урон растет: 1к8 (5 ур), 1к10 (11 ур), 1к12 (17 ур).
+        </div>
+      `
+  },
+  {
+    name: "Черный сатурн",
+    level: "3:УР",
+    components: ["В", "С"],
+    description: `
+        <h3 class="text-2xl font-black mb-2 uppercase italic tracking-tighter">Черный сатурн</h3>
+        <p class="text-sm mb-1 opacity-80 font-bold uppercase tracking-widest">3-Й УРОВЕНЬ | Защитные – Баррикады</p>
+        <div class="grid grid-cols-2 gap-2 text-sm bg-white/5 p-3 rounded border border-white/10 mb-4 font-sans text-white/90">
+          <p><strong>Время:</strong> 1 действие</p>
+          <p><strong>Дистанция:</strong> 10 футов</p>
+          <p><strong>Длительность:</strong> 3 хода</p>
+        </div>
+        <p class="mb-3 text-white/80 leading-relaxed font-sans">Вы испускаете из тела перегретый пар, образующий вокруг вас сферу радиусов 10 футов и поднимаете с земли обломки камня и металла, что начинают кружить вокруг сферы образуя эффект циркулярной пилы.</p>
+        <div class="bg-white/5 border-l-4 border-current p-3 italic text-white/70 text-xs">
+          Видимости внутри сферы ограничена, вы и существа внутри не могут атаковать врагов извне. Враги снаружи не могут атаковать тех, кто находится внутри сферы. При попытки войти в сферу, будучи союзником или врагом, тот получит урон в размере 3к4 и получит эффект кровотечения.
         </div>
       `
   },
