@@ -53,7 +53,14 @@ export default function App() {
     Object.entries(spellsData).forEach(([letter, spells]) => {
       const filtered = spells.filter(s => {
         const matchesSearch = s.name.toLowerCase().includes(search.toLowerCase());
-        const matchesLevel = levelFilter === "all" || s.level === levelFilter;
+        const matchesLevel = (() => {
+  if (levelFilter === "all") return true;
+
+  // приводим уровень заклинания к числу (работает с "2:УР", "2-й уровень")
+  const spellLevel = isNaN(parseInt(s.level)) ? 0 : parseInt(s.level);
+
+  return spellLevel === Number(levelFilter);
+})();
         const matchesCat = !categoryFilter || s.description.includes(categoryFilter);
         const matchesComp = compFilter.length === 0 || compFilter.every(c => s.components?.includes(c));
         
@@ -96,7 +103,7 @@ export default function App() {
     <header className="p-6 pb-2 w-full flex-shrink-0 z-10">
       <div className="max-w-[1400px] mx-auto border-b border-amber-900/20 pb-2">
         <h1 className="text-3xl md:text-5xl font-black text-amber-500 uppercase italic tracking-tighter">АРХИВ ПАРОМЕХАНИКА</h1>
-        <p className="text-amber-700 text-[10px] uppercase tracking-[0.3em] font-sans font-bold italic mt-1">Новые заклинания! v.0.9.6.9 • Тупой-Вайбкодер: Whykenns</p>
+        <p className="text-amber-700 text-[10px] uppercase tracking-[0.3em] font-sans font-bold italic mt-1">Починена сортировка!(наверное) v.0.9.6.9 • Тупой-Вайбкодер: Whykenns</p>
       </div>
     </header>
 
