@@ -179,21 +179,37 @@ if (distFilter !== "all") {
                   ))}
                 </main>
                 
-                <aside className="w-full lg:w-[260px] space-y-4">
-                  <button onClick={() => setShowInfoModal(true)} className="w-full bg-amber-600 hover:bg-amber-500 text-black font-black py-2 rounded text-[10px] uppercase shadow-lg">ИНФО ПАРОМЕХАНИКА</button>
-                  <div className="bg-black border-2 border-amber-900/40 rounded-lg overflow-hidden shadow-2xl">
-                    <img src={ikona} alt="Механик" className="w-full grayscale opacity-80" />
-                  </div>
-                  <div className="bg-[#111] p-3 border border-amber-600/20 rounded-lg shadow-2xl">
-                    <h3 className="text-amber-500 font-black text-center text-[9px] uppercase border-b border-amber-900/20 pb-1 mb-3 italic">★ Избранное</h3>
-                    {favorites.map(f => (
-                      <div key={f.name} onClick={() => setActiveSpell(f)} className="flex items-center justify-between bg-black p-2 mb-1 rounded border border-amber-900/20 hover:border-amber-500 cursor-pointer transition-all group">
-                        <span className="text-[10px] font-bold text-amber-100 group-hover:text-amber-400 uppercase truncate pr-2">{f.name}</span>
-                        <button onClick={e => {e.stopPropagation(); toggleFav(f);}} className="text-red-900 hover:text-red-500 text-lg">×</button>
-                      </div>
-                    ))}
-                  </div>
-                </aside>
+                <aside className="w-full lg:w-[260px] space-y-4 sticky top-0 h-fit">
+  
+  {/* Кнопка ИНФО — теперь она будет стоять на месте */}
+  <button 
+    onClick={() => setShowInfoModal(true)} 
+    className="w-full bg-amber-600 hover:bg-amber-500 text-black font-black py-2 rounded text-[10px] uppercase shadow-lg"
+  >
+    ИНФО ПАРОМЕХАНИКА
+  </button>
+
+  {/* Контейнер с картинкой механика */}
+  <div className="bg-black border-2 border-amber-900/40 rounded-lg overflow-hidden shadow-2xl">
+    <img src={ikona} alt="Механик" className="w-full grayscale opacity-80" />
+  </div>
+
+  {/* Блок Избранного */}
+  <div className="bg-[#111] p-3 border border-amber-600/20 rounded-lg shadow-2xl">
+    <h3 className="text-amber-500 font-black text-center text-[9px] uppercase border-b border-amber-900/20 pb-1 mb-3 italic">
+      ★ Избранное
+    </h3>
+    {/* Ограничим высоту избранного, если оно станет слишком длинным */}
+    <div className="max-h-[300px] overflow-y-auto no-scrollbar">
+      {favorites.map(f => (
+        <div key={f.name} onClick={() => setActiveSpell(f)} className="flex items-center justify-between bg-black p-2 mb-1 rounded border border-amber-900/20 hover:border-amber-500 cursor-pointer transition-all group">
+          <span className="text-[10px] font-bold text-amber-100 group-hover:text-amber-400 uppercase truncate pr-2">{f.name}</span>
+          <button onClick={e => {e.stopPropagation(); toggleFav(f);}} className="text-red-900 hover:text-red-500 text-lg">×</button>
+        </div>
+      ))}
+    </div>
+  </div>
+</aside>
               </div>
             )}
           </div>
