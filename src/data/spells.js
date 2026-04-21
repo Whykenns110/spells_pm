@@ -178,6 +178,25 @@ const spellsList = [
       `
   },
   {
+    name: "Клинок медного пламени",
+    level: "2:УР",
+    components: ["В", "М"],
+    description: `
+        <h3 class="text-2xl font-black mb-2 uppercase italic tracking-tighter">Клинок медного пламени</h3>
+        <p class="text-sm mb-1 opacity-80 font-bold uppercase tracking-widest">2-й уровень | Атакующие – Ближний</p>
+        <div class="grid grid-cols-2 gap-2 text-sm bg-white/5 p-3 rounded border border-white/10 mb-4 font-sans text-white/90">
+          <p><strong>Время:</strong> 1 действие</p>
+          <p><strong>Дистанция:</strong> Касание</p>
+          <p><strong>Компоненты:</strong> В, М (Любая рукоять)</p>
+          <p><strong>Длительность:</strong> 3 действия</p>
+        </div>
+        <p class="mb-3 text-white/80 leading-relaxed font-sans">Вы крепко сжимаете рукоять от клинка в руке, позволяя ей слиться с вашей кистью, она покрывается дымом и преображается. Рукоять превращается в кусок медной трубы из которой вырастает <strong>зеленое "твердое"</strong> пламя в форме клинка.</p>
+        <div class="bg-white/5 border-l-4 border-current p-3 italic text-white/70 text-xs">
+          Ближняя атака: <strong>1к6 режущего урона</strong>. После попадания по цели, та имеет шанс поджечься. Совершите спасбросок <strong>УДАЧИ</strong>, что бы поджечь цель на 2 хода. Эффект горения наносит 1к4 единиц урона каждые 2 хода. Длительность: 4 хода.
+        </div>
+      `
+  },
+  {
     name: "Лечебные травы",
     level: "Заговор",
     components: ["В"],

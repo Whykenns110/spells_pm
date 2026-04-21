@@ -69,11 +69,13 @@ export default function InfoModal({ isOpen, isClosing, onClose }) {
                 <h3 className="font-black text-amber-600 text-sm uppercase mb-2">Хиты</h3>
                 <p className="text-sm">• 1к8 за уровень</p>
                 <p className="text-sm">• На 1 уровне: 8 + мод. Телосложения</p>
+                <p className="text-sm">• Макс кол-во хитов способно уменьшаться</p>
               </div>
               <div className="bg-zinc-900/50 p-4 rounded-2xl border border-white/5">
                 <h3 className="font-black text-amber-600 text-sm uppercase mb-2">Владение</h3>
                 <p className="text-sm">• Доспехи: Кожаный доспех</p>
                 <p className="text-sm">• Спасброски: ИНТ, ЛОВ</p>
+                <p className="text-sm">• Особый навык "Удача". Зависит от Харизмы</p>
               </div>
             </div>
           </section>
