@@ -67,20 +67,18 @@ export default function App() {
         let matchesDist = true;
 
 if (distFilter !== "all") {
-  const desc = s.description || "";
+  // вытаскиваем дистанцию из description
+  const text = (s.distance || s.range || s.description || "").toLowerCase();
 
-  const match = desc.match(/Дистанция:<\\/strong>\\s*([^<]+)/i);
-  const distanceText = match ? match[1].trim().toLowerCase() : "";
-
-  const numMatch = distanceText.match(/\\d+/);
+  const numMatch = text.match(/\d+/);
   const num = numMatch ? parseInt(numMatch[0]) : null;
 
   if (distFilter === "self") {
-    matchesDist = distanceText.includes("на себя") || distanceText.includes("self");
+    matchesDist = text.includes("На себя") || text.includes("self");
   }
 
   else if (distFilter === "touch") {
-    matchesDist = distanceText.includes("касание") || distanceText.includes("touch");
+    matchesDist = text.includes("Касание") || text.includes("touch");
   }
 
   else if (distFilter === "30") {
@@ -125,7 +123,7 @@ if (distFilter !== "all") {
     <header className="p-6 pb-2 w-full flex-shrink-0 z-10">
       <div className="max-w-[1400px] mx-auto border-b border-amber-900/20 pb-2">
         <h1 className="text-3xl md:text-5xl font-black text-amber-500 uppercase italic tracking-tighter">АРХИВ ПАРОМЕХАНИКА</h1>
-        <p className="text-amber-700 text-[10px] uppercase tracking-[0.3em] font-sans font-bold italic mt-1">Починена сортировка!(наверное) v.0.9.6.9 • Тупой-Вайбкодер: Whykenns</p>
+        <p className="text-amber-700 text-[10px] uppercase tracking-[0.3em] font-sans font-bold italic mt-1">Новые заклинания! v.0.9.8.2 • Тупой-Вайбкодер: Whykenns</p>
       </div>
     </header>
 

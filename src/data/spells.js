@@ -197,6 +197,43 @@ const spellsList = [
       `
   },
   {
+    name: "Коварный автомат удачи",
+    level: "4:УР",
+    components: ["В", "М", "С"],
+    description: `
+        <h3 class="text-2xl font-black mb-2 uppercase italic tracking-tighter">Коварный автомат удачи</h3>
+        <p class="text-sm mb-1 opacity-80 font-bold uppercase tracking-widest">4-й уровень | Созидание – Конструирование</p>
+        <div class="grid grid-cols-2 gap-2 text-sm bg-white/5 p-3 rounded border border-white/10 mb-4 font-sans text-white/90">
+          <p><strong>Время:</strong> 1 действие</p>
+          <p><strong>Дистанция:</strong> Касание</p>
+          <p><strong>Компоненты:</strong> В, М, С (Золотая монета)</p>
+          <p><strong>Длительность:</strong> 3 доп. действия</p>
+        </div>
+        <p class="mb-3 text-white/80 leading-relaxed font-sans">Держа в ладони золотую монету, вы быстро подбрасываете ее в воздух, параллельно произнося заклинание. Монета начинает левитировать и испускать пар. Спустя секунду, округу пронзает скрип старых труб и грохот металла. Пар расстворяется в воздухе, обнажая гигантскую ролл-машину, которая тот-час падает на землю.</p>
+        <div class="bg-white/5 border-l-4 border-current p-3 italic text-white/70 text-xs">
+          Совершите спасбросок <strong>УДАЧИ</strong>сложностью 17, что бы крутить автомат. От <strong>двух удачных</strong> попаданий дает один временный бафф из трех случайных: <strong>Восстановление хп на 6 ходов с 3хп за ход</strong>, <strong>доп кд +4</strong>, <strong>сниженная сложность спасбросков на 2</strong>(не действует на казино). При неудачных <strong>двух прокрутов</strong> или более, автомат наносит владельцу 2к4 с преимуществом.
+        </div>
+      `
+  },
+  {
+    name: "Киноварная пушка",
+    level: "2:УР",
+    components: ["В", "С"],
+    description: `
+        <h3 class="text-2xl font-black mb-2 uppercase italic tracking-tighter">Киноварная пушка</h3>
+        <p class="text-sm mb-1 opacity-80 font-bold uppercase tracking-widest">2-й уровень | Атакующие – Дальний</p>
+        <div class="grid grid-cols-2 gap-2 text-sm bg-white/5 p-3 rounded border border-white/10 mb-4 font-sans text-white/90">
+          <p><strong>Время:</strong> 1 действие</p>
+          <p><strong>Дистанция:</strong> 120 футов</p>
+          <p><strong>Компоненты:</strong> В, С</p>
+        </div>
+        <p class="mb-3 text-white/80 leading-relaxed font-sans">Вы выдвигаете руки вперед, представляя, что держите большую двуручную пушку. Ваши ладони испускают дым за которым постепенно материализуются механические части, трансформирующиеся в полноценный стрелятельный аппарат с уже заполненным боеприпасом.</p>
+        <div class="bg-white/5 border-l-4 border-current p-3 italic text-white/70 text-xs">
+          Совершите спасбросок на <strong>силу</strong>, что бы удержать пушку в руках. Делая выстрел из пушки, в указанное место летит снаряд из колбы со ртутью. При ударе о землю или врага, область в радиусе 60 футов имеет <strong>эффект отравления</strong>, способное поразить любых существ в округе нанося им <strong>1к4 единиц урона каждый ход</strong>(если в бою) или <strong>переодичностью в 3 минуты</strong>.
+        </div>
+      `
+  },
+  {
     name: "Лечебные травы",
     level: "Заговор",
     components: ["В"],
@@ -294,7 +331,7 @@ const spellsList = [
     components: ["В", "С", "М"],
     description: `
         <h3 class="text-2xl font-black mb-2 uppercase italic tracking-tighter">Доппельгангер</h3>
-        <p class="text-sm mb-1 opacity-80 font-bold uppercase tracking-widest">1-Й УРОВЕНЬ | Созидание – Утилитарное</p>
+        <p class="text-sm mb-1 opacity-80 font-bold uppercase tracking-widest">1-Й УРОВЕНЬ | Созидание – Утилитарные</p>
         <div class="grid grid-cols-2 gap-2 text-sm bg-white/5 p-3 rounded border border-white/10 mb-4 font-sans text-white/90">
           <p><strong>Время:</strong> 15 мин</p>
           <p><strong>Дистанция:</strong> На себя</p>
