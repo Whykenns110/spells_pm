@@ -56,9 +56,16 @@ export default function App() {
         const matchesLevel = (() => {
   if (levelFilter === "all") return true;
 
-  // приводим уровень заклинания к числу (работает с "2:УР", "2-й уровень")
-  const spellLevel = isNaN(parseInt(s.level)) ? 0 : parseInt(s.level);
+  // Если в фильтре выбрано "Заговор"
+  if (levelFilter === "Заговор") {
+    // Проверяем, содержит ли поле level слово "Заговор" (игнорируя регистр)
+    return s.level && s.level.toString().toLowerCase().includes("заговор");
+  }
 
+  // Для числовых уровней (1-9)
+  // Достаем число из строки уровня заклинания (например из "1 уровень" или "1")
+  const spellLevel = parseInt(s.level);
+  
   return spellLevel === Number(levelFilter);
 })();
         const matchesCat = !categoryFilter || s.description.includes(categoryFilter);
@@ -123,7 +130,7 @@ if (distFilter !== "all") {
     <header className="p-6 pb-2 w-full flex-shrink-0 z-10">
       <div className="max-w-[1400px] mx-auto border-b border-amber-900/20 pb-2">
         <h1 className="text-3xl md:text-5xl font-black text-amber-500 uppercase italic tracking-tighter">АРХИВ ПАРОМЕХАНИКА</h1>
-        <p className="text-amber-700 text-[10px] uppercase tracking-[0.3em] font-sans font-bold italic mt-1">Новые заклинания! v.0.9.8.2 • Тупой-Вайбкодер: Whykenns</p>
+        <p className="text-amber-700 text-[10px] uppercase tracking-[0.3em] font-sans font-bold italic mt-1">Новые заклинания! v.0.9.8.4 • Тупой-Вайбкодер: Whykenns</p>
       </div>
     </header>
 
