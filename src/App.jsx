@@ -65,18 +65,40 @@ export default function App() {
         const matchesComp = compFilter.length === 0 || compFilter.every(c => s.components?.includes(c));
         
         let matchesDist = true;
-        if (distFilter !== "all") {
-          const rangeStr = (s.distance || s.range || "").toLowerCase();
-          const match = rangeStr.match(/\d+/); 
-          const num = match ? parseInt(match[0]) : 0;
-          
-          if (distFilter === "self") matchesDist = rangeStr.includes("на себя") || rangeStr.includes("self");
-          else if (distFilter === "touch") matchesDist = rangeStr.includes("касание") || rangeStr.includes("touch");
-          else if (distFilter === "30") matchesDist = num > 0 && num <= 30;
-          else if (distFilter === "60") matchesDist = num > 30 && num <= 60;
-          else if (distFilter === "120") matchesDist = num > 60 && num <= 120;
-          else if (distFilter === "long") matchesDist = num > 120;
-        }
+
+if (distFilter !== "all") {
+  const desc = s.description || "";
+
+  const match = desc.match(/Дистанция:<\\/strong>\\s*([^<]+)/i);
+  const distanceText = match ? match[1].trim().toLowerCase() : "";
+
+  const numMatch = distanceText.match(/\\d+/);
+  const num = numMatch ? parseInt(numMatch[0]) : null;
+
+  if (distFilter === "self") {
+    matchesDist = distanceText.includes("на себя") || distanceText.includes("self");
+  }
+
+  else if (distFilter === "touch") {
+    matchesDist = distanceText.includes("касание") || distanceText.includes("touch");
+  }
+
+  else if (distFilter === "30") {
+    matchesDist = num !== null && num <= 30;
+  }
+
+  else if (distFilter === "60") {
+    matchesDist = num !== null && num > 30 && num <= 60;
+  }
+
+  else if (distFilter === "120") {
+    matchesDist = num !== null && num > 60 && num <= 120;
+  }
+
+  else if (distFilter === "long") {
+    matchesDist = num !== null && num > 120;
+  }
+}
         return matchesSearch && matchesLevel && matchesCat && matchesComp && matchesDist;
       });
       if (filtered.length) result[letter] = filtered;

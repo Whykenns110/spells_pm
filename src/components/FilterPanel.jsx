@@ -30,7 +30,7 @@ export default function FilterPanel({
         >
           <option value="all">Все уровни</option>
           <option value="Заговор">Заговоры</option>
-          {[1, 2, 3, 4].map(l => <option key={l} value={String(l)}>{l} уровень</option>)}
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(l => <option key={l} value={String(l)}>{l} уровень</option>)}
         </select>
 
         {/* ИСПРАВЛЕННАЯ ДАЛЬНОСТЬ (значения должны совпадать с логикой App.jsx) */}
