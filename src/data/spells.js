@@ -125,18 +125,18 @@ const spellsList = [
   {
     name: "Вспышка клапана",
     level: "Заговор",
-    components: ["В"],
+    components: ["В", "М"],
     description: `
         <h3 class="text-2xl font-black mb-2 uppercase italic">Вспышка клапана</h3>
         <p class="text-sm mb-1 opacity-80 font-bold uppercase tracking-widest">Заговор | Помехи – Оглушение</p>
         <div class="grid grid-cols-2 gap-2 text-sm bg-white/5 p-3 rounded border border-white/10 mb-4 font-sans text-white/90">
           <p><strong>Время:</strong> 1 действие</p>
           <p><strong>Радиус:</strong> 10 футов</p>
-          <p><strong>Компоненты:</strong> В</p>
+          <p><strong>Компоненты:</strong> В, М (Герметичный баллон воздуха)</p>
         </div>
-        <p class="mb-3 text-white/80 leading-relaxed font-serif">Вы резко сбрасываете избыточное давление из резервуаров. С оглушительным свистом вокруг вас вырывается облако обжигающего белого пара, скрывающее вас из виду и дезориентирующее врагов.</p>
+        <p class="mb-3 text-white/80 leading-relaxed font-serif">Вы резко сбрасываете избыточное давление из резервуаров сжатого воздуха. С оглушительным свистом вокруг вас вырывается облако обжигающего белого пара, скрывающее вас из виду и дезориентирующее врагов.</p>
         <div class="bg-white/5 border-l-4 border-current p-3 italic text-white/70 text-xs">
-          Существа в радиусе 10 футов должны пройти спасбросок Ловкости или стать <strong>ослепленными</strong> до начала вашего следующего хода.
+          Существа в радиусе 10 футов должны пройти спасбросок Ловкости или будут <strong>ослеплены</strong> до начала вашего следующего хода.
         </div>
       `
   },
@@ -234,6 +234,24 @@ const spellsList = [
       `
   },
   {
+    name: "Крошечный слуга",
+    level: "1:УР",
+    components: ["В", "М"],
+    description: `
+        <h3 class="text-2xl font-black mb-2 uppercase italic tracking-tighter">Крошечный слуга</h3>
+        <p class="text-sm mb-1 opacity-80 font-bold uppercase tracking-widest">1-Й УРОВЕНЬ | Созидание – Конструирование</p>
+        <div class="grid grid-cols-2 gap-2 text-sm bg-white/5 p-3 rounded border border-white/10 mb-4 font-sans text-white/90">
+          <p><strong>Время:</strong> 240 мин</p>
+          <p><strong>Дистанция:</strong> 720 футов</p>
+          <p><strong>Компоненты:</strong> В, М (Кусочек дерева, медные гвозди)</p>
+        </div>
+        <p class="mb-3 text-white/80 leading-relaxed font-sans italic">Сжимая в ладони кусочек древесины и медный гвоздь, вы произносите заклинание и выдыхаете паром изо рта в кулак, образуя на открытой ладони медно-деревянного солдатика, что полностью подвластен вашему разуму</p>
+        <div class="bg-white/5 border-l-4 border-current p-3 italic text-white/70 text-xs">
+          Крошечный слуга может <strong>переносить и держать небольшие предметы</strong>. Требует топливо в виде уголька каждые 60 минут для поддержания формы. Слугу можно отозвать тем же заклинанием, однако если он не достигнет лимита жизни, <strong>компоненты для его создания не возвратятся</strong>.
+        </div>
+      `
+  },
+  {
     name: "Лечебные травы",
     level: "Заговор",
     components: ["В"],
@@ -271,6 +289,94 @@ const spellsList = [
       `
   },
   {
+    name: "Распределенный теплообмен",
+    level: "3:УР",
+    components: ["В", "С"],
+    description: `
+        <h3 class="text-2xl font-black mb-2 uppercase italic tracking-tighter">Распределенный теплообмен</h3>
+        <p class="text-sm mb-1 opacity-80 font-bold uppercase tracking-widest">3-й уровень | Регенерирующие – Персональная</p>
+        <div class="grid grid-cols-2 gap-2 text-sm bg-white/5 p-3 rounded border border-white/10 mb-4 font-sans text-white/90">
+          <p><strong>Время:</strong> 2 хода</p>
+          <p><strong>Дистанция:</strong> Касание</p>
+          <p><strong>Компоненты:</strong> В, С</p>
+        </div>
+        <p class="mb-3 text-white/80 leading-relaxed font-sans italic">Ваш кулак извергает пар и в порыве гнева мы бьете себя им по груди. Случайная реакция созидания конструирует на вас загадочный механизм, издающий высокочастотные вибрации в радиусе 30 футов.</p>
+        <div class="bg-white/5 border-l-4 border-current p-3 italic text-white/70 text-xs">
+          Любой урон, нанесенный по любому члену команды равномерно распределяется по всем союзникам в радиусе <strong>30 футов</strong>. Если число союзников и число урона не совпадают, <strong>большую часть атаки забирает паромеханик.</strong> Совершите спасбросок <strong>УДАЧИ</strong>, что бы с некоторым шансом конвертировать полученный урон в исцеление <strong>(Действует 1 раз за бой)</strong>.
+        </div>
+      `
+  },
+  {
+    name: "Паровая починка",
+    level: "1:УР",
+    components: ["В", "С"],
+    description: `
+        <h3 class="text-2xl font-black mb-2 uppercase italic tracking-tighter">Паровая починка</h3>
+        <p class="text-sm mb-1 opacity-80 font-bold uppercase tracking-widest">1-й уровень | Созидание – Утилитарные</p>
+        <div class="grid grid-cols-2 gap-2 text-sm bg-white/5 p-3 rounded border border-white/10 mb-4 font-sans text-white/90">
+          <p><strong>Время:</strong> 1 действие</p>
+          <p><strong>Длительность:</strong> 15 минут</p>
+        </div>
+        <p class="mb-3 text-white/80 leading-relaxed font-sans italic">Вы возносите руки над сломанным предметом, заставляя его испускать пар, что окутывает и скрепляет вещь в исходное состояние на некоторый срок./p>
+        <div class="bg-white/5 border-l-4 border-current p-3 italic text-white/70 text-xs">
+          Вы моментально чините любую вещь небольшого размера на 15 минут. Починенная вещь будет испускать небольшие клубки пара в местах скола и трещин.
+        </div>
+      `
+  },
+  {
+    name: "Паровая ингаляция",
+    level: "2:УР",
+    components: ["В", "С"],
+    description: `
+        <h3 class="text-2xl font-black mb-2 uppercase italic tracking-tighter">Паровая ингаляция</h3>
+        <p class="text-sm mb-1 opacity-80 font-bold uppercase tracking-widest">2-й уровень | Созидание – Конструирование</p>
+        <div class="grid grid-cols-2 gap-2 text-sm bg-white/5 p-3 rounded border border-white/10 mb-4 font-sans text-white/90">
+          <p><strong>Время:</strong> 1 действие</p>
+          <p><strong>Длительность:</strong> Короткий отдых</p>
+        </div>
+        <p class="mb-3 text-white/80 leading-relaxed font-sans italic">Ваши руки взмывают вверх, напрягая каждую мышцу. Под вашими ногами начинает дрожать земля и в указанном вами месте, с лязгом металла и грохотом грунта возводятся гигантские медные трубы, от которых отходит квадратная конструкция, формируя <strong>полноценную баню</strong>./p>
+        <div class="bg-white/5 border-l-4 border-current p-3 italic text-white/70 text-xs">
+          Вы создаете небольшую баню радиусом 30 футов. Внутри бани витает исцеляющий дым, совершите короткий отдых, что бы полностью восполнить хиты и снять все негативные эффекты. После короткого отдыха вы чувствуете, что <strong>ваши атаки стали эффективнее</strong>(+1 к урону на 2 боя).
+        </div>
+      `
+  },
+  {
+    name: "Поршневой механизм",
+    level: "1:УР",
+    components: ["В", "М"],
+    description: `
+        <h3 class="text-2xl font-black mb-2 uppercase italic tracking-tighter">Поршневой механизм</h3>
+        <p class="text-sm mb-1 opacity-80 font-bold uppercase tracking-widest">1-й уровень | Созидание – </p>
+        <div class="grid grid-cols-2 gap-2 text-sm bg-white/5 p-3 rounded border border-white/10 mb-4 font-sans text-white/90">
+          <p><strong>Время:</strong> 1 действие</p>
+          <p><strong>Длительность:</strong> 15 минут</p>
+          <p><strong>Компоненты:</strong> В, М (Кусочек меди, Кусочек доски)</p>
+        </div>
+        <p class="mb-3 text-white/80 leading-relaxed font-sans italic">Вы кидаете в выбранное место кусок меди и кусочек доски, что при приземлении материализуют объемный поршень в нужном вам направлении./p>
+        <div class="bg-white/5 border-l-4 border-current p-3 italic text-white/70 text-xs">
+          По вашей команде <strong>бонусным действием</strong> вы можете активировать механизм. Поршень способен двигать громосткие и тяжелые объекты весом до 300кг и объемом до 25 футов .
+        </div>
+      `
+  },
+  {
+    name: "Экспертный взгляд",
+    level: "3:УР",
+    components: ["М"],
+    description: `
+        <h3 class="text-2xl font-black mb-2 uppercase italic tracking-tighter">Экспертный взгляд</h3>
+        <p class="text-sm mb-1 opacity-80 font-bold uppercase tracking-widest">3-й уровень | Созидание – Утилитарные</p>
+        <div class="grid grid-cols-2 gap-2 text-sm bg-white/5 p-3 rounded border border-white/10 mb-4 font-sans text-white/90">
+          <p><strong>Время:</strong> 1 действие</p>
+          <p><strong>Длительность:</strong> 15 минут</p>
+          <p><strong>Компоненты:</strong> М (Монокль)</p>
+        </div>
+        <p class="mb-3 text-white/80 leading-relaxed font-sans italic">Вы слегка притрагиваетесь пальцами к моноклю, заставляя его модифицироваться прямо на вашем лице. Отныне ваш монокль способен смотреть сквозь стены, обнажая устройства механизмов./p>
+        <div class="bg-white/5 border-l-4 border-current p-3 italic text-white/70 text-xs">
+          Ваш монокль способен видеть скрытые механизмы в стенах и иные ловушки разбросаные по темным подземельям.
+        </div>
+      `
+  },
+  {
     name: "Механический кулак",
     level: "Заговор",
     components: ["В", "С"],
@@ -295,7 +401,7 @@ const spellsList = [
     components: ["В", "М"],
     description: `
         <h3 class="text-2xl font-black mb-2 uppercase italic tracking-tighter">Медные Лозы</h3>
-        <p class="text-sm mb-1 opacity-80 font-bold uppercase tracking-widest">Заговор | Помехи – Обездвиживание</p>
+        <p class="text-sm mb-1 opacity-80 font-bold uppercase tracking-widest">1-й уровень | Помехи – Обездвиживание</p>
         <div class="grid grid-cols-2 gap-2 text-sm bg-white/5 p-3 rounded border border-white/10 mb-4 font-sans text-white/90">
           <p><strong>Время:</strong> 5 сек</p>
           <p><strong>Дистанция:</strong> 5 футов</p>
